@@ -26,6 +26,11 @@ const routes = [
         name: 'SellerProductAddPage',
         component: () => import('@/views/seller/product/SellerProductAddPage.vue'),
       },
+      {
+        path: 'detail',
+        name: 'SellerProductDetailPage',
+        component: () => import('@/views/seller/product/SellerProductDetailPage.vue'),
+      }
     ]
   },
   {
