@@ -59,11 +59,11 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref, watch} from 'vue'
+import {onMounted, ref} from 'vue'
 import {deleteSellProduct, getSellProduct, insertSellProduct, updateSellProduct} from "@/apis/product/apis";
 
 const props = defineProps(['prNo'])
-const emits = defineEmits(['handleMoveList'])
+const emits = defineEmits(['handleMoveList', 'handleRefreshKey'])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
 const rows = ref([])
 
@@ -94,6 +94,7 @@ onMounted(() => {
  **/
 const insertSellProductInfo = async () => {
   await insertSellProduct(sellProductInfo.value)
+  emits('handleRefreshKey')
 }
 
 /**
@@ -101,6 +102,7 @@ const insertSellProductInfo = async () => {
  **/
 const updateSellProductInfo = async (i) => {
   await updateSellProduct(rows.value[i])
+  emits('handleRefreshKey')
 }
 
 /**
@@ -108,6 +110,7 @@ const updateSellProductInfo = async (i) => {
  **/
 const deleteSellProductInfo = async (i) => {
   await deleteSellProduct(rows.value[i].spNo)
+  emits('handleRefreshKey')
 }
 
 </script>
