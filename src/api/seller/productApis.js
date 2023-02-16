@@ -2,6 +2,15 @@ import axios from "axios";
 
 const domain = 'http://localhost:8080'
 
+export const getProduct = async (prNo) => {
+  console.log(`[Product Apis] getProduct`)
+  console.log(prNo);
+
+  const res = await axios.get(`${domain}/api/seller/product/${prNo}`);
+
+  console.log(res.data)
+  return res.data
+}
 export const getProductList = async (pageSearch) => {
   console.log(`[Product Apis] getProductList`)
   console.log(pageSearch);
@@ -24,8 +33,8 @@ export const getProductList = async (pageSearch) => {
 
   // 날짜 제한이 있으면 (startDt, endDt)
   if (pageSearch.startDt && pageSearch.endDt) {
-    params.startDt = convertLocalDate(new Date(pageSearch.startDt))
-    params.endDt = convertLocalDate(new Date(pageSearch.endDt))
+    params.startDt = pageSearch.startDt
+    params.endDt = pageSearch.endDt
   }
 
   const res = await axios.get(`${domain}/api/seller/product/list`, {
@@ -49,12 +58,3 @@ export const updateProductStatusAtOnce = async (status, products) => {
   console.log(res.data)
   return res.data
 }
-
-const convertLocalDate = ((localDateTime) => {
-  const localDate = localDateTime.getFullYear() +
-    "-" + ((localDateTime.getMonth() + 1) > 9 ? (localDateTime.getMonth() + 1).toString() : "0" + (localDateTime.getMonth() + 1)) +
-    "-" + (localDateTime.getDate() > 9 ? localDateTime.getDate().toString() : "0" + localDateTime.getDate().toString())
-
-  return localDate
-})
-

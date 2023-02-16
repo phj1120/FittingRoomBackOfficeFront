@@ -15,6 +15,8 @@
               <v-combobox
                 v-model="search.types"
                 :items="categories"
+                item-title="name"
+                item-value="code"
                 label="검색 조건"
                 multiple
               ></v-combobox>
@@ -92,21 +94,21 @@
           <tr
             v-for="product in products"
             :key="product.prNo"
-            @click="clickProductDetail(product.prNo)"
+
           >
             <v-checkbox
               v-model="selectedPNos"
               :value="product.prNo"
             ></v-checkbox>
-            <td>{{ product.prNo }}</td>
-            <td>{{ product.categoryPathName }}</td>
-            <td>{{ product.prBrand }}</td>
-            <td>{{ product.prName }}</td>
-            <td>{{ product.thumbnail }}</td>
-            <td>{{ product.prPrice }}</td>
-            <td>{{ product.prCreateDt }}</td>
-            <td>{{ product.prModifyDt }}</td>
-            <td>{{ product.prStatus }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prNo }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.categoryPathName }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prBrand }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prName }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.thumbnail }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prPrice }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prCreateDt }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prModifyDt }}</td>
+            <td @click="clickProductDetail(product.prNo)">{{ product.prStatus }}</td>
           </tr>
           </tbody>
         </v-table>
@@ -155,8 +157,7 @@ const statusTypes = [{name: '활성', code: 'ACTIVE'},
   {name: '삭제', code: 'DELETE'}
 ]
 
-
-const getProductListPage = async () => {
+const getProductListData = async () => {
   const res = await getProductList(pageSearch.value)
 
   products.value = res.dtoList
@@ -167,7 +168,7 @@ const getProductListPage = async () => {
 const clickChangeStatusButton = async (status) => {
   await updateProductStatusAtOnce(status, selectedPNos.value).then(() => {
       componentKey.value++
-      getProductListPage()
+      getProductListData()
       selectedPNos.value = []
     }
   ).catch(
@@ -181,8 +182,8 @@ const clickChangeStatusButton = async (status) => {
 const clickSearchButton = () => {
   pageSearch.value.keyword = search.value.keyword
   pageSearch.value.types = search.value.types
-  pageSearch.value.startDt = search.value.startDt
-  pageSearch.value.endDt = search.value.endDt
+  pageSearch.value.startDt = convertLocalDate(search.value.startDt)
+  pageSearch.value.endDt = convertLocalDate(search.value.endDt)
   pageSearch.value.page = 1
 
   // 페이지 이동
@@ -199,8 +200,20 @@ const clickProductDetail = (prNo) => {
   router.push({name: 'SellerProductDetailPage', params: {id:prNo}, query: pageSearch.value})
 }
 
+const convertLocalDate = ((localDateTime) => {
+  const localDate = localDateTime.getFullYear() +
+    "-" + ((localDateTime.getMonth() + 1) > 9 ? (localDateTime.getMonth() + 1).toString() : "0" + (localDateTime.getMonth() + 1)) +
+    "-" + (localDateTime.getDate() > 9 ? localDateTime.getDate().toString() : "0" + localDateTime.getDate().toString())
+
+  return localDate
+})
+
+
+
+
+
 onMounted(() => {
-  getProductListPage()
+  getProductListData()
 })
 
 router.beforeEach((to, from, next) => {
@@ -212,7 +225,7 @@ router.beforeEach((to, from, next) => {
 
   // 컴포넌트 갱신
   componentKey.value++
-  getProductListPage()
+  getProductListData()
 
   next()
 })
