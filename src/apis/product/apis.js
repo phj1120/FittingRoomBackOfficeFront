@@ -83,3 +83,40 @@ export const getCategories = async () => {
   return res.data
 }
 
+/**
+ * 판매 상품 조회 API
+ **/
+export const getSellProduct = async (prNo) => {
+  const res = await axios.get(`${domain}/api/seller/sellproduct/${prNo}`)
+  return res.data
+}
+
+/**
+ * 판매 상품 등록 API
+ **/
+export const insertSellProduct = async (sellProductInfo) => {
+  const params = {}
+  params.spSize = sellProductInfo.spSize
+  params.spStatus = sellProductInfo.spStatus
+  const res = await axios.post(`${domain}/api/seller/sellproduct/${sellProductInfo.prNo}`, params)
+  return res.data
+}
+
+/**
+ * 판매 상품 수정 API
+ **/
+export const updateSellProduct = async (sellProductInfo) => {
+  const params = {}
+  params.spSize = sellProductInfo.spSize
+  params.spStatus = sellProductInfo.spStatus
+  const res = await axios.put(`${domain}/api/seller/sellproduct/${sellProductInfo.spNo}`, params)
+  return res.data
+}
+
+/**
+ * 판매 상품 삭제 API
+ **/
+export const deleteSellProduct = async (spNo) => {
+  const res = await axios.delete(`${domain}/api/seller/sellproduct/${spNo}`)
+  return res.data
+}

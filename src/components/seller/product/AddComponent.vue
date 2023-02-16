@@ -1,6 +1,5 @@
 <template>
   <v-col cols="12">
-    {{categoriesInfo}}
     <v-card class="bg-grey-darken-2" min-height="85vh">
       <v-form class="mt-10">
         <v-card class="ma-auto w-50">
@@ -85,7 +84,7 @@ import {getCategories, insertProduct} from "@/apis/product/apis";
 const emits = defineEmits(['handleMoveList'])
 const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
-const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT', 'DELETE'])
+const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
 const dialog = ref(false)
 let count = 0
 
@@ -104,7 +103,7 @@ const productInfo = ref({
 })
 
 /**
- * 상품데이터 API 호출
+ * 상품데이터 추가 API 호출
  **/
 const handleClickSubmit = async () => {
   await insertProduct(productInfo.value)

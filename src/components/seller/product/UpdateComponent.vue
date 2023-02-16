@@ -85,7 +85,7 @@ const props = defineProps(['prNo'])
 const emits = defineEmits(['handleMoveList'])
 const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
-const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT', 'DELETE'])
+const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
 const dialog = ref(false)
 let count = 0
 

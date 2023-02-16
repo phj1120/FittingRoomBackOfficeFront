@@ -2,7 +2,7 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <OptionAddComponent @handleMoveList="handleMoveList"></OptionAddComponent>
+      <OptionAddComponent :prNo="prNo" @handleMoveList="handleMoveList"></OptionAddComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -17,6 +17,7 @@ import OptionAddComponent from "@/components/seller/product/OptionAddComponent.v
 
 const route = useRoute();
 const router = useRouter();
+const prNo = route.params.prNo
 
 const handleMoveList = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
