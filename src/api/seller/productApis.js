@@ -58,3 +58,7 @@ export const updateProductStatusAtOnce = async (status, products) => {
   console.log(res.data)
   return res.data
 }
+
+export const getImageUrl = (path)=>{
+  return `${domain}/image/${path}`
+}
