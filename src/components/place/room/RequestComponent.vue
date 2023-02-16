@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12">
-    <v-card color="grey-darken-2" min-height="85vh">
+    <v-card min-height="85vh">
       <h1>영업 상태 변경 신청 페이지</h1>
     </v-card>
   </v-col>
