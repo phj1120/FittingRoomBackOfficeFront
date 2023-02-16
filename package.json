@@ -16,6 +16,7 @@
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
     "v-calendar": "^2.4.1",
+    "vee-validate": "^4.7.4",
     "vue": "^3.2.13",
     "vue-router": "^4.0.0",
     "vue3-datepicker": "^0.3.4",

@@ -2,7 +2,7 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <AddComponent @handleMoveList="handleMoveList"></AddComponent>
+      <OptionAddComponent @handleMoveList="handleMoveList"></OptionAddComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -12,8 +12,8 @@ import {ref} from "vue";
 import BasicLayout from "@/layouts/seller/SellerLayout.vue";
 import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
 import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
-import AddComponent from "@/components/seller/product/AddComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import OptionAddComponent from "@/components/seller/product/OptionAddComponent.vue";
 
 const route = useRoute();
 const router = useRouter();
