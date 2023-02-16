@@ -6,7 +6,7 @@
     <v-btn color="success" class="me-0 btn-login" @click="handleClickLogin">Login</v-btn>
   </v-form>
   <div class="form-register">
-    <v-btn color="primary" class="btn-register">Sign up</v-btn>
+    <v-btn color="primary" class="btn-register" @click="emits('handleJoinPage')">Sign up</v-btn>
   </div>
 </template>
 
@@ -16,7 +16,7 @@
 
   const userInfo = ref( { memberId: '', password: '' } )
 
-
+  const emits = defineEmits(['handleJoinPage'])
 
   const handleClickLogin = async () => { await axios.post(`http://localhost:8080/auth/api/login`, userInfo.value) }
 </script>

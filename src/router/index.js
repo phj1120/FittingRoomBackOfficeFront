@@ -137,13 +137,18 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'LoginPage',
-    component: () => import('@/views/common/LoginPage.vue'),
+    name: 'LoginPagePre',
+    component: () => import('@/views/common/LoginPagePre.vue'),
   },
   {
     path: '/logout',
     name: 'LogoutPage',
     redirect: '/',
+  },
+  {
+    path: '/login/join',
+    name: 'JoinPage',
+    component: () => import('@/views/common/JoinPage.vue'),
   },
 ]
 
