@@ -112,6 +112,11 @@ const routes = [
         component: () => import('@/views/place/seller/PlaceSellerStatusPage.vue'),
       },
       {
+        path: 'list',
+        name: 'PlaceSellerListPage',
+        component: () => import('@/views/place/seller/PlaceSellerListPage.vue'),
+      },
+      {
         path: 'history',
         name: 'PlaceSellerHistoryPage',
         component: () => import('@/views/place/seller/PlaceSellerHistoryPage.vue'),

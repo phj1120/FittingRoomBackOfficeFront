@@ -1,6 +1,5 @@
 <template>
   <v-col cols="12">
-    <v-card color="grey-darken-2" min-height="85vh">
       <div>
         <v-card class="ma-10 pa-10 font-weight-bold text-h4">피팅룸 {{ roomStatus.roName }}은 <h2 style="display: inline; color: red">
           {{ roomStatus.pmStatus }}</h2> 상태입니다!</v-card>
@@ -29,7 +28,6 @@
           </v-pagination>
         </v-card>
       </div>
-    </v-card>
   </v-col>
 </template>
 

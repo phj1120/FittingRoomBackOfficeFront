@@ -14,7 +14,7 @@
             <th class="text-center font-weight-bold">스토어</th>
             <th class="text-center font-weight-bold">담당자</th>
             <th class="text-center font-weight-bold">요청일</th>
-            <th class="text-center font-weight-bold"></th>
+            <th class="text-center font-weight-bold w-0"></th>
           </tr>
           </thead>
           <tbody>
@@ -48,13 +48,16 @@ import {onMounted, ref} from "vue";
   const sellerList = ref([])
 
 
+  const handleClickPage = ( pageInfo ) => {
+    emits('handleRouterList', pageInfo)
+  }
+
   const getSellerRequestWaitList = async () => {
     const data = await getSellerRequestList( props.listInfo )
     sellerList.value = data.dtoList
     pageInfo.value.page = data.page
     pageInfo.value.size = data.size
     pageInfo.value.last = data.last
-    console.log(sellerList.value)
   }
 
 
