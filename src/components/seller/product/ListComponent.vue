@@ -63,7 +63,8 @@
           <tr>
             <th class="text-left">
               선택
-            </th><th class="text-left">
+            </th>
+            <th class="text-left">
               상품 번호
             </th>
             <th class="text-left">
@@ -106,7 +107,12 @@
             <td @click="clickProductDetail(product.prNo)">{{ product.categoryPathName }}</td>
             <td @click="clickProductDetail(product.prNo)">{{ product.prBrand }}</td>
             <td @click="clickProductDetail(product.prNo)">{{ product.prName }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.thumbnail }}</td>
+            <td @click="clickProductDetail(product.prNo)">
+              <v-img
+                :src="getImageUrl(product.thumbnail)"
+                cover
+              ></v-img>
+            </td>
             <td @click="clickProductDetail(product.prNo)">{{ product.prPrice }}</td>
             <td @click="clickProductDetail(product.prNo)">{{ product.prCreateDt }}</td>
             <td @click="clickProductDetail(product.prNo)">{{ product.prModifyDt }}</td>
@@ -126,7 +132,7 @@
 </template>
 
 <script setup>
-import {getProductList, updateProductStatusAtOnce} from "@/api/seller/productApis";
+import {getImageUrl, getProductList, updateProductStatusAtOnce} from "@/api/seller/productApis";
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import Datepicker from 'vue3-datepicker';
