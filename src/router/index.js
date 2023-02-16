@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
   {
@@ -27,9 +27,19 @@ const routes = [
         component: () => import('@/views/seller/product/SellerProductAddPage.vue'),
       },
       {
-        path: 'detail/:id',
+        path: 'detail/:prNo',
         name: 'SellerProductDetailPage',
         component: () => import('@/views/seller/product/SellerProductDetailPage.vue'),
+      },
+      {
+        path: 'update/:prNo',
+        name: 'SellerProductUpdatePage',
+        component: () => import('@/views/seller/product/SellerProductUpdatePage.vue'),
+      },
+      {
+        path: 'update/option/:prNo',
+        name: 'SellerProductOptionAddPage',
+        component: () => import('@/views/seller/product/SellerProductOptionAddPage.vue'),
       }
     ]
   },

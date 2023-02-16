@@ -62,6 +62,8 @@
           <thead>
           <tr>
             <th class="text-left">
+              선택
+            </th><th class="text-left">
               상품 번호
             </th>
             <th class="text-left">
@@ -139,12 +141,14 @@ const pageInfo = ref({page: null, end: null})
 const search = ref({
   keyword: route.query.keyword,
   types: typeof route.query.types === 'string' ? [route.query.types] : route.query.types,
-  startDt: route.query.startDt, endDt: route.query.endDt
+  startDt: new Date(route.query.startDt),
+  endDt: new Date(route.query.endDt)
 })
 const pageSearch = ref({
   seNo: route.query.seNo,
   page: route.query.page, size: route.query.size,
-  startDt: route.query.startDt, endDt: route.query.endDt,
+  startDt: route.query.startDt,
+  endDt: route.query.endDt,
   types: typeof route.query.types === 'string' ? [route.query.types] : route.query.types,
   keyword: route.query.keyword
 })
@@ -182,8 +186,11 @@ const clickChangeStatusButton = async (status) => {
 const clickSearchButton = () => {
   pageSearch.value.keyword = search.value.keyword
   pageSearch.value.types = search.value.types
-  pageSearch.value.startDt = convertLocalDate(search.value.startDt)
-  pageSearch.value.endDt = convertLocalDate(search.value.endDt)
+
+  if (!isNaN(search.value.startDt) && !isNaN(search.value.endDt)) {
+    pageSearch.value.startDt = convertLocalDate(search.value.startDt)
+    pageSearch.value.endDt = convertLocalDate(search.value.endDt)
+  }
   pageSearch.value.page = 1
 
   // 페이지 이동
@@ -197,7 +204,7 @@ const clickPageButton = () => {
 }
 
 const clickProductDetail = (prNo) => {
-  router.push({name: 'SellerProductDetailPage', params: {id:prNo}, query: pageSearch.value})
+  router.push({name: 'SellerProductDetailPage', params: {prNo: prNo}, query: pageSearch.value})
 }
 
 const convertLocalDate = ((localDateTime) => {
@@ -207,10 +214,6 @@ const convertLocalDate = ((localDateTime) => {
 
   return localDate
 })
-
-
-
-
 
 onMounted(() => {
   getProductListData()
