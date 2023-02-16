@@ -1,6 +1,6 @@
 <template>
   <v-col cols="12">
-    <v-card min-height="85vh">
+    <v-card class="bg-grey-darken-2" min-height="85vh">
       <h1>목록 페이지</h1>
     </v-card>
   </v-col>

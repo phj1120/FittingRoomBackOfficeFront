@@ -26,6 +26,16 @@ const routes = [
         name: 'SellerProductAddPage',
         component: () => import('@/views/seller/product/SellerProductAddPage.vue'),
       },
+      {
+        path: 'update/:prNo',
+        name: 'SellerProductUpdatePage',
+        component: () => import('@/views/seller/product/SellerProductUpdatePage.vue'),
+      },
+      {
+        path: 'update/option/:prNo',
+        name: 'SellerProductOptionAddPage',
+        component: () => import('@/views/seller/product/SellerProductOptionAddPage.vue'),
+      },
     ]
   },
   {
