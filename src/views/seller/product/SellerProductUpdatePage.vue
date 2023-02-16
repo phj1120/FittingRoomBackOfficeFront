@@ -2,7 +2,7 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <AddComponent @handleMoveList="handleMoveList"></AddComponent>
+      <UpdateComponent :prNo="prNo" @handleMoveList="handleMoveList"></UpdateComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -12,8 +12,8 @@ import {ref} from "vue";
 import BasicLayout from "@/layouts/seller/SellerLayout.vue";
 import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
 import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
-import AddComponent from "@/components/seller/product/AddComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import UpdateComponent from "@/components/seller/product/UpdateComponent.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -21,6 +21,7 @@ const router = useRouter();
 const handleMoveList = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
 }
+const prNo = route.params.prNo
 
 const links = ref([
   {icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage'},
