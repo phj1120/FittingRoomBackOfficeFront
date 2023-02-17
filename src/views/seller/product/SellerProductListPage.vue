@@ -14,7 +14,6 @@
   import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
   import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
 
-
   const links = ref([
     { icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage' },
     { icon: 'mdi-send', title: '상품 등록', name: 'SellerProductAddPage' },
