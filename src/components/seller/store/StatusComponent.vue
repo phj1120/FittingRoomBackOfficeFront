@@ -12,7 +12,7 @@
               <th class="text-center font-weight-bold">종류</th>
               <th class="text-center font-weight-bold">사유</th>
               <th class="text-center font-weight-bold">상태</th>
-              <th class="text-center font-weight-bold">등록일</th>
+              <th class="text-center font-weight-bold">시행날짜</th>
             </tr>
             </thead>
 
@@ -37,7 +37,7 @@
     </v-card>
   </v-col>
   <v-dialog class="justify-center" v-model="dialog.tf">
-    <DialogComponent @handleClickDialog = "handleClickDialog" :list = "dialog.list" ></DialogComponent>
+    <DialogComponent @handleClickDialog = "handleClickDialog" :list = "dialog.list" @refreshList="emits('refreshList')"></DialogComponent>
   </v-dialog>
 </template>
 
@@ -49,7 +49,7 @@ import DialogComponent from "@/components/seller/store/DialogComponent.vue";
 
 
 const props = defineProps(['listInfo'])
-const emits = defineEmits(['handleRouterList'])
+const emits = defineEmits(['handleRouterList','refreshList'])
 const pageInfo = ref([{ page: null, size: null, last: null, start: 1 }])
 const storeStatus = ref({})
 const historyList = ref([])
@@ -59,7 +59,7 @@ const handleClickPage = ( pageInfo ) => {
   emits('handleRouterList', pageInfo)
 }
 const handleClickDialog = (list) => {
-  console.log(list)
+
   dialog.value.list = list
   dialog.value.tf = !dialog.value.tf
 }

@@ -36,7 +36,7 @@ const inputFormat = ref('yyyy-MM-dd')
 const requestHistoryData = ref({'rhContent': null, 'rhReason':null, 'rhStartDt':null})
 const select = ref()
 const text = ref()
-const items = ['가입','휴업','탈퇴']
+const items = ['영업','휴업','탈퇴']
 
 
 const insertRequestHistory = async ()=>{

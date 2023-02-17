@@ -3,7 +3,7 @@
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
       <v-col cols="12" :key="refrashKey">
-      <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList"></StatusComponent>
+      <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList" @refreshList="refreshList"></StatusComponent>
       </v-col>
     </ContentLayout>
   </BasicLayout>
@@ -37,6 +37,9 @@
     router.push({ name: 'SellerStoreStatusPage', query: {page: listInfo.value.page, size: listInfo.value.size}})
   }
 
+  const refreshList = () =>{
+    refrashKey.value++
+  }
   router.beforeEach(( to, from, next ) => {
     listInfo.value.page = to.query.page
     listInfo.value.size = to.query.size

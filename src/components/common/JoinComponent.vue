@@ -55,8 +55,9 @@
 <script setup>
 import {ref, watch} from "vue";
 import UploadComponent from "@/components/common/UploadComponent.vue";
-import {insertSeller} from "@/apis/place/SellerApis";
+
 import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
+import {insertSeller} from "@/apis/seller/sellerApis";
 
 const insertSellerData = ref({seName: null, seManager: null, seId: null, sePassword: null
 ,seEmail: null,sePhone: null, seAddress: null,pmNo: null, fixFile: 0 ,image: [] })
@@ -64,9 +65,7 @@ const insertSellerData = ref({seName: null, seManager: null, seId: null, sePassw
 const requestHistoryData = ref({rhContent: '가입', pmNo: 0, seNo: 0 })
 
 const emits = defineEmits(['handleLoginPage'])
-const insertSellerRequestHistoryData = ref()
 const previews = ref([])
-const radioIndex = ref(0)
 const clickRemoveBtn = () => {
   insertSellerData.value.image.splice(0, 1)
 

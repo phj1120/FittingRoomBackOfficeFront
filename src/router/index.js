@@ -166,9 +166,14 @@ const routes = [
     redirect: '/',
   },
   {
-    path: '/login/join',
-    name: 'JoinPage',
-    component: () => import('@/views/common/JoinPage.vue'),
+    path: '/login/sellerJoin',
+    name: 'SellerJoinPage',
+    component: () => import('@/views/common/SellerJoinPage.vue'),
+  },
+  {
+    path: '/login/placeAdminJoin',
+    name: 'PlaceAdminJoinPage',
+    component: () => import('@/views/common/PlaceAdminJoinPage.vue'),
   },
 ]
 

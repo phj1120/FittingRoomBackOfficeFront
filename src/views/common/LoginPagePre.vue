@@ -12,7 +12,7 @@
 
   <BasicLayout>
     <ContentLayout>
-      <LoginComponent @handleJoinPage="handleJoinPage"></LoginComponent>
+      <LoginComponent @handleSellerJoinPage="handleSellerJoinPage" @handlePlaceAdminJoinPage="handlePlaceAdminJoinPage"></LoginComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -24,10 +24,12 @@ import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
   import {useRoute, useRouter} from "vue-router";
 
   const router = useRouter()
-  const handleJoinPage = () =>{
-
-    router.push({name : 'JoinPage'})
+  const handleSellerJoinPage = () =>{
+    router.push({name : 'SellerJoinPage'})
   }
+const handlePlaceAdminJoinPage = () =>{
+  router.push({name : 'PlaceAdminJoinPage'})
+}
 </script>
 
 <style scoped>
