@@ -6,11 +6,11 @@
           <div class="d-flex justify-center ma-10">
             <div class="v-col-4">
               <v-text-field
-                v-model="productInfo.prName"
+                v-model="getProductValue.prName"
                 label="상품명" required
               ></v-text-field>
               <v-select
-                v-model="productInfo.prcNo"
+                v-model="getProductValue.prcNo"
                 :items="categoriesInfo"
                 item-title="prcPathName"
                 item-value="prcNo"
@@ -19,11 +19,11 @@
             </div>
             <div class="v-col-4">
               <v-text-field
-                v-model="productInfo.prBrand"
+                v-model="getProductValue.prBrand"
                 label="브랜드" required
               ></v-text-field>
               <v-text-field
-                v-model="productInfo.prPrice"
+                v-model="getProductValue.prPrice"
                 label="가격" required
               ></v-text-field>
             </div>
@@ -48,7 +48,7 @@
           </div>
           <div class="v-col-3 ma-auto mt-5">
             <v-select
-              v-model="productInfo.prStatus"
+              v-model="getProductValue.prStatus"
               :items="status"
               label="등록 상태" required
             ></v-select>
@@ -79,8 +79,9 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
-import {getCategories, insertProduct} from "@/apis/product/apis";
+import {getCategories, getProduct, updateProduct} from "@/apis/product/apis";
 
+const props = defineProps(['prNo'])
 const emits = defineEmits(['handleMoveList'])
 const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
@@ -92,6 +93,7 @@ let count = 0
  * 입력한 상품데이터
  **/
 const productInfo = ref({
+  prNo: props.prNo,
   prName: null,
   prBrand: null,
   prPrice: null,
@@ -103,13 +105,44 @@ const productInfo = ref({
 })
 
 /**
- * 상품데이터 API 호출
+ * 가져온 상품데이터
  **/
-const handleClickSubmit = async () => {
-  await insertProduct(productInfo.value)
-  emits('handleMoveList')
+const getProductValue = ref({
+  prNo: null,
+  prName: null,
+  prBrand: null,
+  prPrice: null,
+  prStatus: null,
+  prcNo: null
+})
+
+/**
+ * 상품 정보 가져오기
+ **/
+const getProductInfo = async () => {
+  const res = await getProduct(props.prNo)
+  getProductValue.value = res
 }
 
+onMounted(() => {
+  getProductInfo()
+})
+
+/**
+ * 상품데이터 수정 API 호출
+ **/
+const handleClickSubmit = async () => {
+  productInfo.value.prNo = getProductValue.value.prNo
+  productInfo.value.prName = getProductValue.value.prName
+  productInfo.value.prBrand = getProductValue.value.prBrand
+  productInfo.value.prPrice = getProductValue.value.prPrice
+  productInfo.value.prStatus = getProductValue.value.prStatus
+  productInfo.value.prcNo = getProductValue.value.prcNo
+
+  await updateProduct(productInfo.value)
+  emits('handleMoveList')
+  dialog.value = true
+}
 
 /**
  * 카테고리 조회 API 호출
@@ -199,6 +232,7 @@ watch(productInfo.value.topFiles, async () => {
     }
   )
 })
+
 </script>
 
 <style scoped>
