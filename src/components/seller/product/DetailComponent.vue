@@ -110,7 +110,7 @@
 </template>
 
 <script setup>
-import {getImageUrl, getProduct} from "@/api/seller/productApis";
+import {getImageUrl, getProduct} from "@/apis/product/productApis";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 

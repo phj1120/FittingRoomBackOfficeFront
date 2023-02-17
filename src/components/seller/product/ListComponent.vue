@@ -95,6 +95,8 @@ const emits = defineEmits(['handelDetailPage', 'handleChangePage'])
 const pageInfo = ref({page: null, end: null})
 const products = ref([])
 const selectedPNos = ref([])
+const detailDialog = ref(false)
+
 const statusTypes = [{name: '활성', code: 'ACTIVE'},
   {name: '비활성', code: 'INACTIVE'},
   {name: '품절', code: 'SOLDOUT'},
@@ -128,6 +130,7 @@ const clickPageButton = () => {
 }
 
 const clickProductDetail = (prNo) => {
+  detailDialog.value = true
   emits('handelDetailPage', prNo)
 }
 

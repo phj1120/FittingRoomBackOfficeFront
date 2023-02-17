@@ -3,14 +3,17 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <v-row>
-        <SearchComponent :pageSearch="pageSearch" @handleProductSearch="handleProductSearch"></SearchComponent>
-      </v-row>
-      <v-row>
-        <ListComponent :key="componentKey" :pageSearch="pageSearch"
-                       @handleChangePage="handleChangePage"
-                       @handelDetailPage="handelDetailPage"></ListComponent>
-      </v-row>
+      <v-col cols="12">
+        <v-row>
+            <SearchComponent :pageSearch="pageSearch"
+                             @handleProductSearch="handleProductSearch"></SearchComponent>
+        </v-row>
+        <v-row>
+            <ListComponent :key="componentKey" :pageSearch="pageSearch"
+                           @handleChangePage="handleChangePage"
+                           @handelDetailPage="handelDetailPage"></ListComponent>
+        </v-row>
+      </v-col>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -51,6 +54,7 @@ const handleChangePage = (pageInfo) => {
 const handelDetailPage = (prNo) => {
   console.log('handleDetailPage')
   console.log(prNo)
+
   router.push({name: 'SellerProductDetailPage', params: {prNo: prNo}, query: pageSearch.value})
 };
 
