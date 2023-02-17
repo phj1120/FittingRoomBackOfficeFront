@@ -3,7 +3,7 @@
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
       <v-col cols="12" :key="refrashKey">
-        <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList"></StatusComponent>
+        <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList" @handleRoute="handleRoute"></StatusComponent>
       </v-col>
     </PlaceContentLayout>
   </PlaceLayout>
@@ -37,6 +37,10 @@
     listInfo.value.page = pageInfo.page
     listInfo.value.size = pageInfo.size
     router.push({ name: 'PlaceSellerStatusPage', query: {page: listInfo.value.page, size: listInfo.value.size}})
+  }
+
+  const handleRoute = () => {
+    router.push({ name: 'PlaceSellerStatusPage' })
   }
 
 

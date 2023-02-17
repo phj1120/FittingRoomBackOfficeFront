@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const domain = 'http://' + window.location.hostname + ':8080'
 
 export const getSellerRequestList = async ( listInfo ) => {
