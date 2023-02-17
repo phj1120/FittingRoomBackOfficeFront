@@ -5,58 +5,58 @@
         <v-card class="ma-auto w-50 bg-grey-darken-1 mb-16">
           <h2 class="text-center mt-10">상품 수정</h2>
           <v-card class="ma-10 bg-grey-lighten-2">
-          <div class="d-flex justify-center ma-10">
-            <div class="v-col-4">
-              <v-text-field
-                v-model="getProductValue.prName"
-                label="상품명" required
-              ></v-text-field>
-              <v-select
-                v-model="getProductValue.prcNo"
-                :items="categoriesInfo"
-                item-title="prcPathName"
-                item-value="prcNo"
-                label="카테고리" required
-              ></v-select>
+            <div class="d-flex justify-center ma-10">
+              <div class="v-col-4">
+                <v-text-field
+                  v-model="getProductValue.prName"
+                  label="상품명" required
+                ></v-text-field>
+                <v-select
+                  v-model="getProductValue.prcNo"
+                  :items="categoriesInfo"
+                  item-title="prcPathName"
+                  item-value="prcNo"
+                  label="카테고리" required
+                ></v-select>
+              </div>
+              <div class="v-col-4">
+                <v-text-field
+                  v-model="getProductValue.prBrand"
+                  label="브랜드" required
+                ></v-text-field>
+                <v-text-field
+                  v-model="getProductValue.prPrice"
+                  label="가격" required
+                ></v-text-field>
+              </div>
             </div>
-            <div class="v-col-4">
-              <v-text-field
-                v-model="getProductValue.prBrand"
-                label="브랜드" required
-              ></v-text-field>
-              <v-text-field
-                v-model="getProductValue.prPrice"
-                label="가격" required
-              ></v-text-field>
-            </div>
-          </div>
           </v-card>
           <v-card class="ma-10 bg-grey-lighten-2">
-          <div class="v-col-7 ma-auto mt-5">
-            <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
-                          @change="handleChangeFile()" accept="image/*"></v-file-input>
-            <v-col>
-              <v-radio-group v-model="productInfo.thumbnailIndex">
-                <v-row class="justify-center">
-                  <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
-                    <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
-                    <v-row>
-                      <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
-                      <v-btn @click="clickRemoveBtn(i)">삭제</v-btn>
-                    </v-row>
-                  </div>
-                </v-row>
-              </v-radio-group>
-            </v-col>
-            <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
-          </div>
-          <div class="v-col-3 ma-auto mt-5">
-            <v-select
-              v-model="getProductValue.prStatus"
-              :items="status"
-              label="등록 상태" required
-            ></v-select>
-          </div>
+            <div class="v-col-7 ma-auto mt-5">
+              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
+                            @change="handleChangeFile()" accept="image/*"></v-file-input>
+              <v-col>
+                <v-radio-group v-model="productInfo.thumbnailIndex">
+                  <v-row class="justify-center">
+                    <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
+                      <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
+                      <v-row>
+                        <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
+                        <v-btn @click="clickRemoveBtn(i)">삭제</v-btn>
+                      </v-row>
+                    </div>
+                  </v-row>
+                </v-radio-group>
+              </v-col>
+              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
+            </div>
+            <div class="v-col-3 ma-auto mt-5">
+              <v-select
+                v-model="getProductValue.prStatus"
+                :items="status"
+                label="등록 상태" required
+              ></v-select>
+            </div>
           </v-card>
           <div class="text-center ma-10">
             <v-btn class="me-4" @click="handleClickSubmit" color="success">

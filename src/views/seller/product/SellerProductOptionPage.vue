@@ -3,7 +3,8 @@
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
       <v-col cols="12" :key="refreshKey">
-        <OptionAddComponent :prNo="prNo" @handleMoveList="handleMoveList" @handleRefreshKey="handleRefreshKey"></OptionAddComponent>
+        <OptionAddComponent :prNo="prNo" @handleMoveList="handleMoveList"
+                            @handleRefreshKey="handleRefreshKey"></OptionAddComponent>
       </v-col>
     </ContentLayout>
   </BasicLayout>

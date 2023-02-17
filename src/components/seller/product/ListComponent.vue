@@ -72,10 +72,10 @@
     </v-card>
   </v-col>
   <v-pagination class="mb-10"
-    v-model="pageInfo.page"
-    :length="pageInfo.end"
-    :total-visible="10"
-    @click="clickPageButton"
+                v-model="pageInfo.page"
+                :length="pageInfo.end"
+                :total-visible="10"
+                @click="clickPageButton"
   ></v-pagination>
   <div :key="detailDialog" class="d-flex">
     <DialogsComponent :dialog="detailDialog">

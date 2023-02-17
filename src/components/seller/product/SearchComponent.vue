@@ -2,13 +2,13 @@
   <v-row class="ma-5 mb-0">
     <div class="d-flex ma-4 mb-0 w-100">
       <v-combobox class="w-25"
-        variant="solo"
-        v-model="search.types"
-        :items="categories"
-        item-title="name"
-        item-value="code"
-        label="검색 조건"
-        multiple
+                  variant="solo"
+                  v-model="search.types"
+                  :items="categories"
+                  item-title="name"
+                  item-value="code"
+                  label="검색 조건"
+                  multiple
       ></v-combobox>
       <v-text-field label="검색" variant="solo" v-model="search.keyword" class="mr-1 ml-1 w-75"></v-text-field>
       <v-btn @click="clickSearchButton" style="height: 56px; width: 100px" color="green">검색</v-btn>
@@ -20,7 +20,6 @@
       <Datepicker v-model="search.endDt" inputFormat="yyyy-MM-dd" class="bg-white ml-5"/>
     </div>
   </v-row>
-
 </template>
 
 <script setup>
@@ -41,7 +40,6 @@ const search = ref({
 const clickSearchButton = () => {
   emits('handleProductSearch', search)
 }
-
 
 </script>
 

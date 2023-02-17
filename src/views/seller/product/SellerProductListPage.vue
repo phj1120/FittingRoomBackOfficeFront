@@ -25,6 +25,7 @@ import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
 import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
 import SearchComponent from "@/components/seller/product/SearchComponent.vue";
 import {useRoute, useRouter} from "vue-router";
+import {convertLocalDate} from "@/utils/productUtil";
 
 const links = ref([
   {icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage'},
@@ -80,15 +81,6 @@ const handleProductSearch = (search) => {
   router.push({name: 'SellerProductListPage', query: pageSearch.value})
 }
 
-const convertLocalDate = ((localDateTime) => {
-  const localDate = localDateTime.getFullYear() +
-    "-" + ((localDateTime.getMonth() + 1) > 9 ? (localDateTime.getMonth() + 1).toString() : "0" + (localDateTime.getMonth() + 1)) +
-    "-" + (localDateTime.getDate() > 9 ? localDateTime.getDate().toString() : "0" + localDateTime.getDate().toString())
-
-  return localDate
-})
-
-
 router.beforeEach((to, from, next) => {
   pageSearch.value.seNo = to.query.seNo
   pageSearch.value.page = to.query.page
@@ -101,7 +93,6 @@ router.beforeEach((to, from, next) => {
 
   next()
 })
-
 
 </script>
 

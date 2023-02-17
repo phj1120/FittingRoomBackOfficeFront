@@ -29,7 +29,6 @@ const handleCancel = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
 }
 
-
 const links = ref([
   {icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage'},
   {icon: 'mdi-send', title: '상품 등록', name: 'SellerProductAddPage'},

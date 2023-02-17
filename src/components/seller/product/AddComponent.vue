@@ -130,11 +130,10 @@ const productInfo = ref({
 /**
  * 상품데이터 추가 API 호출
  **/
-const handleClickSubmit = async () => {
+const clickCompleteButton = async () => {
   await insertProduct(productInfo.value)
-  emits('handleMoveList')
+  submitDialog.value = !submitDialog.value
 }
-
 
 /**
  * 카테고리 조회 API 호출
@@ -226,20 +225,13 @@ watch(productInfo.value.topFiles, async () => {
 })
 
 /**
- * 완료 버튼 클릭
- **/
-const clickCompleteButton = async () => {
-  await insertProduct(productInfo.value)
-  submitDialog.value = !submitDialog.value
-}
-
-/**
  * 다이어로그 닫기
  **/
 const clickCancelButton = () => {
   submitDialog.value = !submitDialog.value
   emits('handleMoveList')
 }
+
 </script>
 
 <style scoped>
