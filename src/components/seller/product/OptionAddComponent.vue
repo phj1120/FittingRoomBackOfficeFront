@@ -2,35 +2,36 @@
   <v-col cols="12">
     <v-card class="bg-grey-darken-2" min-height="85vh">
       <v-form class="mt-10">
-        <v-card class="ma-auto w-50">
-          <div class="d-flex ma-10 bg-grey-lighten-1 text-black">
-            <div class="v-col-3 mt-5 ml-16">
+        <v-card class="ma-auto w-33 bg-grey-darken-1 mb-16">
+          <h2 class="text-center mt-10">판매 상품 관리</h2>
+          <v-card class="d-flex ma-10 text-black bg-grey-lighten-2">
+            <div class="v-col-3 mt-5 ml-5">
               <v-text-field
                 v-model="sellProductInfo.spSize"
                 label="사이즈" required
               ></v-text-field>
             </div>
-            <div class="v-col-3 mt-5">
+            <div class="v-col-4 mt-5">
               <v-select
                 v-model="sellProductInfo.spStatus"
                 :items="status"
                 label="상태" required
               ></v-select>
             </div>
-            <div class="v-col-6 mt-7 ml-10">
+            <div class="v-col-6 mt-7 ml-11">
               <v-btn class="me-4" @click="insertSellProductInfo" color="success">
                 등록
               </v-btn>
             </div>
-          </div>
-          <div class="d-flex ma-10 bg-grey-lighten-1 text-black" v-for="(row,i) in rows" :key="i">
-            <div class="v-col-3 mt-5 ml-16">
+          </v-card>
+          <v-card class="d-flex ma-10 text-black bg-grey-lighten-2" v-for="(row,i) in rows" :key="i">
+            <div class="v-col-3 mt-5 ml-5">
               <v-text-field
                 v-model="row.spSize"
                 label="사이즈" required
               ></v-text-field>
             </div>
-            <div class="v-col-3 mt-5">
+            <div class="v-col-4 mt-5">
               <v-select
                 v-model="row.spStatus"
                 :items="status"
@@ -45,8 +46,7 @@
                 삭제
               </v-btn>
             </div>
-          </div>
-
+          </v-card>
           <div class="text-center ma-10">
             <v-btn class="me-4" @click="emits('handleMoveList')" color="success">
               완료
