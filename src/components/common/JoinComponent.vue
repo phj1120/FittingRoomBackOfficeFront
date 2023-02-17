@@ -56,7 +56,7 @@
 import {ref, watch} from "vue";
 import UploadComponent from "@/components/common/UploadComponent.vue";
 import {insertSeller} from "@/apis/place/SellerApis";
-import {insertRequestHistorySeller} from "@/apis/seller/StoreApis";
+import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
 
 const insertSellerData = ref({seName: null, seManager: null, seId: null, sePassword: null
 ,seEmail: null,sePhone: null, seAddress: null,pmNo: null, fixFile: 0 ,image: [] })

@@ -15,20 +15,16 @@
               <th class="text-center font-weight-bold">등록일</th>
             </tr>
             </thead>
-            <v-dialog class="justify-center" v-model="dialog">
-              <DialogComponent @handleClickDialog = "handleClickDialog"></DialogComponent>
-            </v-dialog>
+
             <tbody>
-            <tr v-for="history in historyList" :key="history.seNo">
-              <td class="text-center">{{ history.rhNo }}</td>
-              <td class="text-center">{{ history.rhContent }}</td>
+            <tr v-for="list in historyList" :key="list.rhNo">
+              <td class="text-center">{{ list.rhNo }}</td>
+              <td class="text-center">{{ list.rhContent }}</td>
               <td class="text-center">
-
-
-                <v-btn @click="handleClickDialog">사유보기</v-btn>
+                <v-btn color="success" @click="handleClickDialog(list)">사유보기</v-btn>
               </td>
-              <td class="text-center">{{ history.rhStatus }}</td>
-              <td class="text-center">{{ history.rhCreateDt }}</td>
+              <td class="text-center">{{ list.rhStatus }}</td>
+              <td class="text-center">{{ list.rhStartDt }}</td>
             </tr>
             </tbody>
           </v-table>
@@ -40,12 +36,15 @@
       </div>
     </v-card>
   </v-col>
+  <v-dialog class="justify-center" v-model="dialog.tf">
+    <DialogComponent @handleClickDialog = "handleClickDialog" :list = "dialog.list" ></DialogComponent>
+  </v-dialog>
 </template>
 
 <script setup>
 import {onMounted, ref} from "vue";
 
-import {getStoreStatus, getStoreStatusList} from "@/apis/seller/StoreApis";
+import {getStoreStatus, getStoreStatusList} from "@/apis/seller/storeApis";
 import DialogComponent from "@/components/seller/store/DialogComponent.vue";
 
 
@@ -54,14 +53,15 @@ const emits = defineEmits(['handleRouterList'])
 const pageInfo = ref([{ page: null, size: null, last: null, start: 1 }])
 const storeStatus = ref({})
 const historyList = ref([])
-const dialog = ref(false)
+const dialog = ref({tf : false , list : null})
 
 const handleClickPage = ( pageInfo ) => {
   emits('handleRouterList', pageInfo)
 }
-const handleClickDialog = () => {
-  dialog.value = !dialog.value
-
+const handleClickDialog = (list) => {
+  console.log(list)
+  dialog.value.list = list
+  dialog.value.tf = !dialog.value.tf
 }
 const getSellerStatus = async () => {
   const data = await getStoreStatus(props.listInfo.id )

@@ -10,6 +10,7 @@ export const insertRequestHistorySeller = async (requestHistoryData) => {
 
 export const getStoreStatus = async ( id ) => {
   const res = await axios.get(`${ domain }/api/seller/store/status/${id}`)
+  console.log(res.data)
   return res.data
 }
 
@@ -21,4 +22,6 @@ export const getStoreStatusList = async ( listInfo ) => {
   })
   return res.data
 }
+
+
 

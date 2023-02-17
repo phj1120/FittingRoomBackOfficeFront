@@ -36,7 +36,7 @@
 import {reactive, ref, watch} from "vue";
 import Datepicker from 'vue3-datepicker';
 import {ko} from "date-fns/locale";
-import {insertRequestHistorySeller} from "@/apis/seller/StoreApis";
+import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
 const picked = ref(new Date())
 const locale = reactive(ko)
 const inputFormat = ref('yyyy-MM-dd')
