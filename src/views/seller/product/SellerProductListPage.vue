@@ -10,8 +10,9 @@
         </v-row>
         <v-row>
             <ListComponent :key="componentKey" :pageSearch="pageSearch"
+                           @handleUpdatePage="handleUpdatePage"
                            @handleChangePage="handleChangePage"
-                           @handelDetailPage="handelDetailPage"></ListComponent>
+                           @handelDetailPage="handleDetailPage"></ListComponent>
         </v-row>
       </v-col>
     </ContentLayout>
@@ -51,12 +52,16 @@ const handleChangePage = (pageInfo) => {
   router.push({name: 'SellerProductListPage', query: pageSearch.value})
 }
 
-const handelDetailPage = (prNo) => {
+const handleDetailPage = (prNo) => {
   console.log('handleDetailPage')
   console.log(prNo)
 
   router.push({name: 'SellerProductDetailPage', params: {prNo: prNo}, query: pageSearch.value})
 };
+
+const handleUpdatePage = (prNo) =>{
+  router.push({name: 'SellerProductUpdatePage', params:{prNo}, query: pageSearch.value})
+}
 
 const handleProductSearch = (search) => {
   pageSearch.value.keyword = search.value.keyword

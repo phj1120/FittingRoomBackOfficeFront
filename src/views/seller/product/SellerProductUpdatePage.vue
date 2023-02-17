@@ -2,7 +2,9 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <UpdateComponent :prNo="prNo" @handleMoveList="handleMoveList"></UpdateComponent>
+      <UpdateComponent :prNo="prNo" @handleMoveList="handleMoveList"
+                       @handleComplete="handleComplete" @handleCancel="handleCancel"
+      ></UpdateComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -19,9 +21,14 @@ const route = useRoute();
 const router = useRouter();
 const prNo = route.params.prNo
 
-const handleMoveList = () => {
+const handleComplete = () => {
+  router.push({name: 'SellerProductListPage'})
+}
+
+const handleCancel = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
 }
+
 
 const links = ref([
   {icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage'},

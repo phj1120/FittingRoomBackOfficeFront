@@ -62,7 +62,7 @@
             <v-btn class="me-4" @click="handleClickSubmit" color="success">
               완료
             </v-btn>
-            <v-btn @click="emits('handleMoveList')" color="red">
+            <v-btn @click="handleClickCancel" color="red">
               취소
             </v-btn>
           </div>
@@ -87,7 +87,7 @@ import {onMounted, ref, watch} from 'vue'
 import {getCategories, getProduct, updateProduct} from "@/apis/product/productApis";
 
 const props = defineProps(['prNo'])
-const emits = defineEmits(['handleMoveList'])
+const emits = defineEmits(['handleComplete', 'handleCancel'])
 const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
@@ -145,9 +145,17 @@ const handleClickSubmit = async () => {
   productInfo.value.prcNo = getProductValue.value.prcNo
 
   await updateProduct(productInfo.value)
-  emits('handleMoveList')
+  emits('handleComplete')
   dialog.value = true
 }
+
+/**
+ * 상품데이터 수정 취소
+ **/
+const handleClickCancel = async () => {
+  emits('handleCancel')
+}
+
 
 /**
  * 카테고리 조회 API 호출
