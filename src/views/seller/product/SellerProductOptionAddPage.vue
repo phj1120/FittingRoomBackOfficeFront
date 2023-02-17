@@ -2,7 +2,9 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <OptionAddComponent @handleMoveList="handleMoveList"></OptionAddComponent>
+      <v-col cols="12" :key="refreshKey">
+        <OptionAddComponent :prNo="prNo" @handleMoveList="handleMoveList" @handleRefreshKey="handleRefreshKey"></OptionAddComponent>
+      </v-col>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -17,9 +19,15 @@ import OptionAddComponent from "@/components/seller/product/OptionAddComponent.v
 
 const route = useRoute();
 const router = useRouter();
+const prNo = route.params.prNo
+const refreshKey = ref(0)
 
 const handleMoveList = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
+}
+
+const handleRefreshKey = () => {
+  refreshKey.value++
 }
 
 const links = ref([

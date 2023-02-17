@@ -2,7 +2,9 @@
   <v-col cols="12">
     <v-card class="bg-grey-darken-2" min-height="85vh">
       <v-form class="mt-10">
-        <v-card class="ma-auto w-50">
+        <v-card class="ma-auto w-50 bg-grey-darken-1 mb-16">
+          <h2 class="text-center mt-10">상품 수정</h2>
+          <v-card class="ma-10 bg-grey-lighten-2">
           <div class="d-flex justify-center ma-10">
             <div class="v-col-4">
               <v-text-field
@@ -28,7 +30,9 @@
               ></v-text-field>
             </div>
           </div>
-          <div class="v-col-7 ma-auto">
+          </v-card>
+          <v-card class="ma-10 bg-grey-lighten-2">
+          <div class="v-col-7 ma-auto mt-5">
             <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
                           @change="handleChangeFile()" accept="image/*"></v-file-input>
             <v-col>
@@ -53,6 +57,7 @@
               label="등록 상태" required
             ></v-select>
           </div>
+          </v-card>
           <div class="text-center ma-10">
             <v-btn class="me-4" @click="handleClickSubmit" color="success">
               완료

@@ -17,11 +17,11 @@ import UpdateComponent from "@/components/seller/product/UpdateComponent.vue";
 
 const route = useRoute();
 const router = useRouter();
+const prNo = route.params.prNo
 
 const handleMoveList = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
 }
-const prNo = route.params.prNo
 
 const links = ref([
   {icon: 'mdi-inbox-arrow-down', title: '상품 목록', name: 'SellerProductListPage'},
