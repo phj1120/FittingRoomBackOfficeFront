@@ -2,7 +2,10 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <OptionAddComponent @handleMoveList="handleMoveList"></OptionAddComponent>
+      <v-col cols="12" :key="refreshKey">
+        <OptionAddComponent :prNo="prNo" @handleMoveList="handleMoveList"
+                            @handleRefreshKey="handleRefreshKey"></OptionAddComponent>
+      </v-col>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -13,13 +16,19 @@ import BasicLayout from "@/layouts/seller/SellerLayout.vue";
 import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
 import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
 import {useRoute, useRouter} from "vue-router";
-import OptionAddComponent from "@/components/seller/product/OptionAddComponent.vue";
+import OptionAddComponent from "@/components/seller/product/OptionComponent.vue";
 
 const route = useRoute();
 const router = useRouter();
+const prNo = route.params.prNo
+const refreshKey = ref(0)
 
 const handleMoveList = () => {
   router.push({name: 'SellerProductListPage', query: route.query})
+}
+
+const handleRefreshKey = () => {
+  refreshKey.value++
 }
 
 const links = ref([

@@ -2,62 +2,67 @@
   <v-col cols="12">
     <v-card class="bg-grey-darken-2" min-height="85vh">
       <v-form class="mt-10">
-        <v-card class="ma-auto w-50">
-          <div class="d-flex justify-center ma-10">
-            <div class="v-col-4">
-              <v-text-field
-                v-model="getProductValue.prName"
-                label="상품명" required
-              ></v-text-field>
+        <v-card class="ma-auto w-50 bg-grey-darken-1 mb-16">
+          <h2 class="text-center mt-10">상품 수정</h2>
+          <v-card class="ma-10 bg-grey-lighten-2">
+            <div class="d-flex justify-center ma-10">
+              <div class="v-col-4">
+                <v-text-field
+                  v-model="getProductValue.prName"
+                  label="상품명" required
+                ></v-text-field>
+                <v-select
+                  v-model="getProductValue.prcNo"
+                  :items="categoriesInfo"
+                  item-title="prcPathName"
+                  item-value="prcNo"
+                  label="카테고리" required
+                ></v-select>
+              </div>
+              <div class="v-col-4">
+                <v-text-field
+                  v-model="getProductValue.prBrand"
+                  label="브랜드" required
+                ></v-text-field>
+                <v-text-field
+                  v-model="getProductValue.prPrice"
+                  label="가격" required
+                ></v-text-field>
+              </div>
+            </div>
+          </v-card>
+          <v-card class="ma-10 bg-grey-lighten-2">
+            <div class="v-col-7 ma-auto mt-5">
+              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
+                            @change="handleChangeFile()" accept="image/*"></v-file-input>
+              <v-col>
+                <v-radio-group v-model="productInfo.thumbnailIndex">
+                  <v-row class="justify-center">
+                    <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
+                      <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
+                      <v-row>
+                        <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
+                        <v-btn @click="clickRemoveBtn(i)">삭제</v-btn>
+                      </v-row>
+                    </div>
+                  </v-row>
+                </v-radio-group>
+              </v-col>
+              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
+            </div>
+            <div class="v-col-3 ma-auto mt-5">
               <v-select
-                v-model="getProductValue.prcNo"
-                :items="categoriesInfo"
-                item-title="prcPathName"
-                item-value="prcNo"
-                label="카테고리" required
+                v-model="getProductValue.prStatus"
+                :items="status"
+                label="등록 상태" required
               ></v-select>
             </div>
-            <div class="v-col-4">
-              <v-text-field
-                v-model="getProductValue.prBrand"
-                label="브랜드" required
-              ></v-text-field>
-              <v-text-field
-                v-model="getProductValue.prPrice"
-                label="가격" required
-              ></v-text-field>
-            </div>
-          </div>
-          <div class="v-col-7 ma-auto">
-            <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
-                          @change="handleChangeFile()" accept="image/*"></v-file-input>
-            <v-col>
-              <v-radio-group v-model="productInfo.thumbnailIndex">
-                <v-row class="justify-center">
-                  <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
-                    <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
-                    <v-row>
-                      <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
-                      <v-btn @click="clickRemoveBtn(i)">삭제</v-btn>
-                    </v-row>
-                  </div>
-                </v-row>
-              </v-radio-group>
-            </v-col>
-            <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
-          </div>
-          <div class="v-col-3 ma-auto mt-5">
-            <v-select
-              v-model="getProductValue.prStatus"
-              :items="status"
-              label="등록 상태" required
-            ></v-select>
-          </div>
+          </v-card>
           <div class="text-center ma-10">
             <v-btn class="me-4" @click="handleClickSubmit" color="success">
               완료
             </v-btn>
-            <v-btn @click="emits('handleMoveList')" color="red">
+            <v-btn @click="handleClickCancel" color="red">
               취소
             </v-btn>
           </div>
@@ -79,10 +84,10 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
-import {getCategories, getProduct, updateProduct} from "@/apis/product/apis";
+import {getCategories, getProduct, updateProduct} from "@/apis/product/productApis";
 
 const props = defineProps(['prNo'])
-const emits = defineEmits(['handleMoveList'])
+const emits = defineEmits(['handleComplete', 'handleCancel'])
 const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
@@ -140,9 +145,17 @@ const handleClickSubmit = async () => {
   productInfo.value.prcNo = getProductValue.value.prcNo
 
   await updateProduct(productInfo.value)
-  emits('handleMoveList')
+  emits('handleComplete')
   dialog.value = true
 }
+
+/**
+ * 상품데이터 수정 취소
+ **/
+const handleClickCancel = async () => {
+  emits('handleCancel')
+}
+
 
 /**
  * 카테고리 조회 API 호출

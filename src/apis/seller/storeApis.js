@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const domain = 'http://localhost:8080'
+
 /**
  * 영업관리 apis
  * 작성자 : 주호승
