@@ -37,6 +37,7 @@ const route = useRoute();
 const router = useRouter();
 
 const componentKey = ref(0)
+
 const pageSearch = ref({
   seNo: route.query.seNo,
   page: route.query.page, size: route.query.size,
