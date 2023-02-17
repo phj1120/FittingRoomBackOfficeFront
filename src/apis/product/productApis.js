@@ -1,4 +1,5 @@
 import axios from "axios";
+import authAxios from "@/apis/common/authAxios";
 
 const domain = 'http://localhost:8080'
 
@@ -6,7 +7,7 @@ const domain = 'http://localhost:8080'
  * 상품 조회 API
  **/
 export const getProduct = async (prNo) => {
-  const res = await axios.get(`${domain}/api/seller/product/${prNo}`)
+  const res = await authAxios.get(`${domain}/api/seller/product/${prNo}`)
   return res.data
 }
 
@@ -40,7 +41,7 @@ export const getProductList = async (pageSearch) => {
     params.endDt = pageSearch.endDt
   }
 
-  const res = await axios.get(`${domain}/api/seller/product/list`, {
+  const res = await authAxios.get(`${domain}/api/seller/product/list`, {
     params: params
   });
 
@@ -108,7 +109,7 @@ export const updateProduct = async (productInfo) => {
       formData.append(`bottomFiles[${i}]`, productInfo.bottomFiles[i])
     }
   }
-  const res = await axios.put(`${domain}/api/seller/product/${productInfo.prNo}`, formData,
+  const res = await authAxios.put(`${domain}/api/seller/product/${productInfo.prNo}`, formData,
     {headers: {'Content-Type': 'false'}})
 
   return res.data
@@ -122,7 +123,7 @@ export const updateProductStatusAtOnce = async (status, products) => {
   console.log(status)
   console.log(products)
 
-  const res = await axios.put(`${domain}/api/seller/product/status`, {
+  const res = await authAxios.put(`${domain}/api/seller/product/status`, {
     prNos: products,
     prStatus: status
   });
@@ -136,7 +137,7 @@ export const updateProductStatusAtOnce = async (status, products) => {
  * 카테고리 조회 API
  **/
 export const getCategories = async () => {
-  const res = await axios.get(`${domain}/api/seller/product/categories`)
+  const res = await authAxios.get(`${domain}/api/seller/product/categories`)
   return res.data
 }
 
@@ -144,7 +145,7 @@ export const getCategories = async () => {
  * 판매 상품 조회 API
  **/
 export const getSellProduct = async (prNo) => {
-  const res = await axios.get(`${domain}/api/seller/sellproduct/${prNo}`)
+  const res = await authAxios.get(`${domain}/api/seller/sellproduct/${prNo}`)
   return res.data
 }
 
@@ -155,7 +156,7 @@ export const insertSellProduct = async (sellProductInfo) => {
   const params = {}
   params.spSize = sellProductInfo.spSize
   params.spStatus = sellProductInfo.spStatus
-  const res = await axios.post(`${domain}/api/seller/sellproduct/${sellProductInfo.prNo}`, params)
+  const res = await authAxios.post(`${domain}/api/seller/sellproduct/${sellProductInfo.prNo}`, params)
   return res.data
 }
 
@@ -166,7 +167,7 @@ export const updateSellProduct = async (sellProductInfo) => {
   const params = {}
   params.spSize = sellProductInfo.spSize
   params.spStatus = sellProductInfo.spStatus
-  const res = await axios.put(`${domain}/api/seller/sellproduct/${sellProductInfo.spNo}`, params)
+  const res = await authAxios.put(`${domain}/api/seller/sellproduct/${sellProductInfo.spNo}`, params)
   return res.data
 }
 
@@ -174,7 +175,7 @@ export const updateSellProduct = async (sellProductInfo) => {
  * 판매 상품 삭제 API
  **/
 export const deleteSellProduct = async (spNo) => {
-  const res = await axios.delete(`${domain}/api/seller/sellproduct/${spNo}`)
+  const res = await authAxios.delete(`${domain}/api/seller/sellproduct/${spNo}`)
   return res.data
 }
 
