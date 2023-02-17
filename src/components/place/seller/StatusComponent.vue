@@ -40,7 +40,7 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-  import {getSellerRequestList} from "@/apis/place/SellerApis";
+  import {getSellerRequestList} from "@/apis/place/sellerApis";
 
   const props = defineProps(['listInfo'])
   const emits = defineEmits(['handleRouterList'])

@@ -39,7 +39,7 @@
             <td class="text-center">{{ seller.seStatus }}</td>
             <td class="text-center">{{ seller.seCreateDt }}</td>
             <td class="text-center">
-              <v-btn color="success" @click="handleClickDialogs">Detail</v-btn>
+              <v-btn color="success" @click="handleClickDialogs(seller.seNo)">Detail</v-btn>
             </td>
           </tr>
           </tbody>
@@ -51,20 +51,25 @@
       </v-card>
     </v-card>
   </v-col>
-  <DialogsComponent :dialog="dialog">
-    <template v-slot:dialogContent>tasdsadasesssst</template>
-    <template v-slot:dialogBtn>
-      <v-btn color="primary" block @click="handleClickDialogs">Close</v-btn>
-      <v-btn color="primary" block @click="handleClickDialogs">aa</v-btn>
-    </template>
-  </DialogsComponent>
+  <v-col :key="dialog">
+    <DialogsComponent :dialog="dialog">
+      <template v-slot:dialogContent>
+        <DetailComponent :sellerDetail="sellerDetail[0]"></DetailComponent>
+      </template>
+      <template v-slot:dialogBtn>
+        <v-btn class="mr-5" color="success" @click="handleClickDialogs">RUN</v-btn>
+        <v-btn class="ml-5" color="error" @click="handleClickDialogs">close</v-btn>
+      </template>
+    </DialogsComponent>
+  </v-col>
 </template>
 
 <script setup>
-  import {getPlaceSellerList} from "@/apis/place/SellerApis";
+  import {getPlaceSellerList} from "@/apis/place/sellerApis";
   import {onMounted, ref} from "vue";
   import SearchComponent from "@/components/common/SearchComponent.vue";
   import DialogsComponent from "@/components/common/DialogsComponent.vue";
+  import DetailComponent from "@/components/place/seller/DetailComponent.vue";
 
 
   const props = defineProps(['listInfo'])
@@ -72,6 +77,7 @@
   const pageInfo = ref([{ page: null, size: null, last: null, start: 1 }])
   const searchList = ref([ 'Store', 'Manager' ])
   const sellerList = ref([])
+  const sellerDetail = ref()
   const statusList = ref({item: ['전체','영업', '휴업'], value: props.listInfo.status})
   const dialog = ref(false)
 
@@ -88,7 +94,8 @@
     emits( 'handleRouterStatus', status )
   }
 
-  const handleClickDialogs = () => {
+  const handleClickDialogs = ( seNo ) => {
+    sellerDetail.value = sellerList.value.filter(item => item.seNo == seNo)
     dialog.value = !dialog.value
   }
 

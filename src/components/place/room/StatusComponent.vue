@@ -33,7 +33,7 @@
 
 <script setup>
   import {onMounted, ref} from "vue";
-  import {getPlaceRoomStatus, getPlaceRoomStatusList} from "@/apis/place/PlaceApis";
+  import {getPlaceRoomStatus, getPlaceRoomStatusList} from "@/apis/place/placeApis";
 
 
   const props = defineProps(['listInfo'])
