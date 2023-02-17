@@ -48,7 +48,7 @@
             </div>
           </v-card>
           <div class="text-center ma-10">
-            <v-btn class="me-4" @click="emits('handleMoveList')" color="success">
+            <v-btn class="me-4" @click="clickCompleteButton" color="success">
               완료
             </v-btn>
           </div>
@@ -56,16 +56,32 @@
       </v-form>
     </v-card>
   </v-col>
+  <div :key="submitDialog" class="d-flex">
+    <DialogsComponent :dialog="submitDialog">
+      <template v-slot:dialogContent>
+        완료되었습니다.
+      </template>
+      <template v-slot:dialogBtn>
+        <v-col class="text-center">
+          <v-btn @click="clickCancelButton">
+            닫기
+          </v-btn>
+        </v-col>
+      </template>
+    </DialogsComponent>
+  </div>
 </template>
 
 <script setup>
 import {onMounted, ref} from 'vue'
 import {deleteSellProduct, getSellProduct, insertSellProduct, updateSellProduct} from "@/apis/product/productApis";
+import DialogsComponent from "@/components/common/DialogsComponent.vue";
 
 const props = defineProps(['prNo'])
 const emits = defineEmits(['handleMoveList', 'handleRefreshKey'])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
 const rows = ref([])
+const submitDialog = ref(false)
 
 /**
  * 입력한 상품 옵션 데이터
@@ -113,6 +129,20 @@ const deleteSellProductInfo = async (i) => {
   emits('handleRefreshKey')
 }
 
+/**
+ * 완료 버튼 클릭
+ **/
+const clickCompleteButton = () => {
+  submitDialog.value = !submitDialog.value
+}
+
+/**
+ * 다이어로그 닫기
+ **/
+const clickCancelButton = () => {
+  submitDialog.value = !submitDialog.value
+  emits('handleMoveList')
+}
 </script>
 
 <style scoped>

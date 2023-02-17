@@ -15,7 +15,7 @@ import BasicLayout from "@/layouts/seller/SellerLayout.vue";
 import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
 import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
 import {useRoute, useRouter} from "vue-router";
-import OptionAddComponent from "@/components/seller/product/OptionAddComponent.vue";
+import OptionAddComponent from "@/components/seller/product/OptionComponent.vue";
 
 const route = useRoute();
 const router = useRouter();

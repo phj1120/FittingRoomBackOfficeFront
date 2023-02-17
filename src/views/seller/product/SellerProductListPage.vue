@@ -3,18 +3,16 @@
   <BasicLayout>
     <SideLayout :links="links"></SideLayout>
     <ContentLayout>
-      <v-col cols="12">
-        <v-row>
-            <SearchComponent :pageSearch="pageSearch"
-                             @handleProductSearch="handleProductSearch"></SearchComponent>
-        </v-row>
-        <v-row>
-            <ListComponent :key="componentKey" :pageSearch="pageSearch"
-                           @handleUpdatePage="handleUpdatePage"
-                           @handleChangePage="handleChangePage"
-                           @handelDetailPage="handleDetailPage"></ListComponent>
-        </v-row>
-      </v-col>
+      <v-card class="justify-center ma-auto bg-grey-lighten-2 mb-7">
+        <SearchComponent :pageSearch="pageSearch"
+                         @handleProductSearch="handleProductSearch"></SearchComponent>
+        <ListComponent :key="componentKey" :pageSearch="pageSearch"
+                       @handleUpdatePage="handleUpdatePage"
+                       @handleChangePage="handleChangePage"
+                       @handelDetailPage="handleDetailPage"
+                       @handleUpdateOptionPage="handleUpdateOptionPage"
+        ></ListComponent>
+      </v-card>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -60,8 +58,12 @@ const handleDetailPage = (prNo) => {
   router.push({name: 'SellerProductDetailPage', params: {prNo: prNo}, query: pageSearch.value})
 };
 
-const handleUpdatePage = (prNo) =>{
-  router.push({name: 'SellerProductUpdatePage', params:{prNo}, query: pageSearch.value})
+const handleUpdatePage = (prNo) => {
+  router.push({name: 'SellerProductUpdatePage', params: {prNo}, query: pageSearch.value})
+}
+
+const handleUpdateOptionPage = (prNo) => {
+  router.push({name: 'SellerProductOptionAddPage', params: {prNo}, query: pageSearch.value})
 }
 
 const handleProductSearch = (search) => {

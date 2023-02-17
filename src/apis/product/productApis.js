@@ -132,7 +132,6 @@ export const updateProductStatusAtOnce = async (status, products) => {
 }
 
 
-
 /**
  * 카테고리 조회 API
  **/
@@ -179,9 +178,3 @@ export const deleteSellProduct = async (spNo) => {
   return res.data
 }
 
-/**
- * 이미지 조회
- **/
-export const getImageUrl = (path)=>{
-  return `${domain}/image/${path}`
-}

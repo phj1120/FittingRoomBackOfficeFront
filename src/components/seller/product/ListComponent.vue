@@ -1,170 +1,140 @@
 <template>
   <v-col cols="12">
-    <v-card color="grey-darken-2" min-height="85vh">
-      <h1>목록 페이지</h1>
-
-      <!--  활성, 비활성, 품절, 삭제  -->
-      <v-row>
-        <v-col v-for="statusType in statusTypes" :key=statusType.code cols="1">
-          <v-btn @click="clickChangeStatusButton(statusType.code)">
-            {{ statusType.name }}
-          </v-btn>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-table>
-          <thead>
-          <tr>
-            <th class="text-left">
-              선택
-            </th>
-            <th class="text-left">
-              상품 번호
-            </th>
-            <th class="text-left">
-              카테고리
-            </th>
-            <th class="text-left">
-              브랜드
-            </th>
-            <th class="text-left">
-              상품명
-            </th>
-            <th class="text-left">
-              이미지
-            </th>
-            <th class="text-left">
-              가격
-            </th>
-            <th class="text-left">
-              등록일
-            </th>
-            <th class="text-left">
-              수정일
-            </th>
-            <th class="text-left">
-              상태
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            v-for="product in products"
-            :key="product.prNo"
-          >
-            <v-checkbox
-              v-model="selectedPNos"
-              :value="product.prNo"
-            ></v-checkbox>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prNo }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.categoryPathName }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prBrand }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prName }}</td>
-            <td @click="clickProductDetail(product.prNo)">
-              <v-img
-                :src="getImageUrl(product.thumbnail)"
-                cover
-              ></v-img>
-            </td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prPrice }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prCreateDt }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prModifyDt }}</td>
-            <td @click="clickProductDetail(product.prNo)">{{ product.prStatus }}</td>
-          </tr>
-          </tbody>
-        </v-table>
-      </v-row>
+    <v-card min-height="85vh" class="ma-5 mt-0">
+      <v-col cols=12>
+        <v-row class="ml-2">
+          <div v-for="statusType in statusTypes" :key=statusType.code class="ma-3">
+            <v-btn @click="clickChangeStatusButton(statusType.code)" color="blue">
+              {{ statusType.name }}
+            </v-btn>
+          </div>
+        </v-row>
+        <v-row class="ma-3">
+          <v-table>
+            <thead>
+            <tr class="bg-grey-lighten-2">
+              <th class="text-left">
+                선택
+              </th>
+              <th class="text-left">
+                상품 번호
+              </th>
+              <th class="text-left">
+                카테고리
+              </th>
+              <th class="text-left">
+                브랜드
+              </th>
+              <th class="text-left">
+                상품명
+              </th>
+              <th class="text-left">
+                이미지
+              </th>
+              <th class="text-left">
+                가격
+              </th>
+              <th class="text-left">
+                등록일
+              </th>
+              <th class="text-left">
+                수정일
+              </th>
+              <th class="text-left">
+                상태
+              </th>
+            </tr>
+            </thead>
+            <tbody class="">
+            <tr v-for="product in products" :key="product.prNo">
+              <td>
+                <v-checkbox v-model="selectedPNos" :value="product.prNo" class="mt-5"></v-checkbox>
+              </td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.prNo }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.categoryPathName }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.prBrand }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.prName }}</td>
+              <td @click="clickProductDetail(product.prNo)">
+                <v-img
+                  :src="getImageUrl(product.thumbnail)"
+                  cover
+                ></v-img>
+              </td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.prPrice }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ convertLocalDate(product.prCreateDt) }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ convertLocalDate(product.prModifyDt) }}</td>
+              <td @click="clickProductDetail(product.prNo)">{{ product.prStatus }}</td>
+            </tr>
+            </tbody>
+          </v-table>
+        </v-row>
+      </v-col>
     </v-card>
   </v-col>
-  <v-pagination
+  <v-pagination class="mb-10"
     v-model="pageInfo.page"
     :length="pageInfo.end"
     :total-visible="10"
     @click="clickPageButton"
   ></v-pagination>
-  <v-col :key="detailDialog">
+  <div :key="detailDialog" class="d-flex">
     <DialogsComponent :dialog="detailDialog">
       <template v-slot:dialogContent>
-        <v-col cols="12">
+        <div class="ma-5 ">
           <v-row>
-            <v-col cols="4" class="pa-0">
-              대표 사진
-              <v-carousel height="300">
+            <div class="pr-10" style="width: 300px;">
+              <v-carousel height="355" class="border">
                 <v-carousel-item v-for="file in productInfo.topFiles" :key="file.prfNo"
-                                 :src=getImageUrl(file.prfUuid)
-                                 cover
+                                 :src=getImageUrl(file.prfUuid) contain
                 ></v-carousel-item>
               </v-carousel>
-              상세 사진
-              <v-carousel height="300">
-                <v-carousel-item v-for="file in productInfo.bottomFiles" :key="file.prfNo"
-                                 :src=getImageUrl(file.prfUuid)
-                                 cover
-                ></v-carousel-item>
-              </v-carousel>
-            </v-col>
-            <v-col cols="8">
-              <v-row>
-                상품 정보
-              </v-row>
+            </div>
+            <div class="" style="width: 500px;">
               <v-row>
                 <v-col>
-                  <v-table>
+                  <v-table class="border">
                     <tbody>
                     <tr>
-                      <th class="text-left">
-                        상품 번호
+                      <th class="text-left bg-grey-lighten-2">
+                        상품명
                       </th>
                       <td>
-                        {{ productInfo.prNo }}
+                        {{ productInfo.prName }}
                       </td>
-                      <th class="text-left">
-                        카테고리
-                      </th>
-                      <td>
-                        {{ productInfo.categoryPathName }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th class="text-left">
+                      <th class="text-left bg-grey-lighten-2">
                         브랜드
                       </th>
                       <td>
                         {{ productInfo.prBrand }}
                       </td>
-                      <th class="text-left">
+                    </tr>
+                    <tr>
+                      <th class="text-left bg-grey-lighten-2">
+                        카테고리
+                      </th>
+                      <td>
+                        {{ productInfo.categoryPathName }}
+                      </td>
+                      <th class="text-left bg-grey-lighten-2">
                         가격
                       </th>
                       <td>
                         {{ productInfo.prPrice }}
                       </td>
                     </tr>
-                    <tr>
-                      <th class="text-left">
-                        상품명
-                      </th>
-                      <td>
-                        {{ productInfo.prName }}
-                      </td>
-                    </tr>
                     </tbody>
                   </v-table>
                 </v-col>
               </v-row>
-
-              <v-row>
-                사이즈
-              </v-row>
               <v-row>
                 <v-col>
-                  <v-table>
+                  <v-table class="border">
                     <thead>
-                    <tr>
-                      <th class="text-left">
+                    <tr class="bg-grey-lighten-2">
+                      <th class="text-center">
                         사이즈
                       </th>
-                      <th class="text-left">
+                      <th class="text-center">
                         상태
                       </th>
                     </tr>
@@ -181,13 +151,17 @@
                   </v-table>
                 </v-col>
               </v-row>
-            </v-col>
+              <v-btn @click="clickUpdateOptionButton" color="blue" class="ma-auto mt-5 mb-3">
+                옵션 수정
+              </v-btn>
+            </div>
           </v-row>
-        </v-col>
+        </div>
+        <v-file-input type="file" label="productInfo.bottomFiles" disabled></v-file-input>
       </template>
       <template v-slot:dialogBtn>
-        <v-col>
-          <v-btn @click="clickUpdateButton">
+        <v-col class="text-center">
+          <v-btn @click="clickUpdateButton" color="blue" class="mr-5">
             수정
           </v-btn>
           <v-btn @click="clickCancelButton">
@@ -196,16 +170,17 @@
         </v-col>
       </template>
     </DialogsComponent>
-  </v-col>
+  </div>
 </template>
 
 <script setup>
-import {getImageUrl, getProduct, getProductList, updateProductStatusAtOnce} from "@/apis/product/productApis";
+import {getProduct, getProductList, updateProductStatusAtOnce} from "@/apis/product/productApis";
 import {onMounted, ref} from "vue";
 import DialogsComponent from "@/components/common/DialogsComponent.vue";
+import {convertLocalDate, getImageUrl} from "@/utils/productUtil";
 
 const props = defineProps(['pageSearch'])
-const emits = defineEmits(['handelDetailPage', 'handleChangePage', 'handleUpdatePage'])
+const emits = defineEmits(['handelDetailPage', 'handleChangePage', 'handleUpdatePage', 'handleUpdateOptionPage'])
 
 const pageInfo = ref({
   page: null,
@@ -215,7 +190,7 @@ const selectedPNos = ref([])
 const detailDialog = ref(false)
 const products = ref([])
 const productInfo = ref({
-  prNo:null,
+  prNo: null,
   prName: null,
   prBrand: null,
   prPrice: null,
@@ -263,13 +238,16 @@ const clickProductDetail = async (prNo) => {
   detailDialog.value = !detailDialog.value
 }
 
-const clickUpdateButton = () =>{
-  console.log('click update')
+const clickUpdateButton = () => {
   emits('handleUpdatePage', productInfo.value.prNo)
 }
 
-const clickCancelButton = () =>{
+const clickCancelButton = () => {
   detailDialog.value = !detailDialog.value
+}
+
+const clickUpdateOptionButton = () => {
+  emits('handleUpdateOptionPage', productInfo.value.prNo)
 }
 
 

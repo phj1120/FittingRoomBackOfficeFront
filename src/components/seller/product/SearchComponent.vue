@@ -1,44 +1,24 @@
 <template>
-  <v-row>
-    <v-col cols="8">
-      <v-row
-        align="start"
-        no-gutters>
-        <v-col cols="4">
-          <v-combobox
-            v-model="search.types"
-            :items="categories"
-            item-title="name"
-            item-value="code"
-            label="검색 조건"
-            multiple
-          ></v-combobox>
-        </v-col>
-        <v-col cols="8">
-          <v-text-field label="검색" variant="outlined" v-model="search.keyword"></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row
-        align="start"
-        no-gutters>
-        <v-col cols="2">
-          <p>시작</p>
-        </v-col>
-        <v-col cols="4">
-          <Datepicker v-model="search.startDt"
-                      inputFormat="yyyy-MM-dd"/>
-        </v-col>
-        <v-col cols="2">
-          <p>끝</p>
-        </v-col>
-        <v-col cols="4">
-          <Datepicker v-model="search.endDt"/>
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="2" align-self="center">
-      <v-btn @click="clickSearchButton" min-height="100">검색</v-btn>
-    </v-col>
+  <v-row class="ma-5 mb-0">
+    <div class="d-flex ma-4 mb-0 w-100">
+      <v-combobox class="w-25"
+        variant="solo"
+        v-model="search.types"
+        :items="categories"
+        item-title="name"
+        item-value="code"
+        label="검색 조건"
+        multiple
+      ></v-combobox>
+      <v-text-field label="검색" variant="solo" v-model="search.keyword" class="mr-1 ml-1 w-75"></v-text-field>
+      <v-btn @click="clickSearchButton" style="height: 56px; width: 100px" color="green">검색</v-btn>
+    </div>
+    <div class="d-flex ml-5 mb-3 border">
+      <p class="ml-5">시작일</p>
+      <Datepicker v-model="search.startDt" inputFormat="yyyy-MM-dd" class="bg-white ml-5 mr-5"/>
+      <p>종료일</p>
+      <Datepicker v-model="search.endDt" inputFormat="yyyy-MM-dd" class="bg-white ml-5"/>
+    </div>
   </v-row>
 
 </template>

@@ -33,12 +33,12 @@
           </v-card>
           <v-card class="ma-10 bg-grey-lighten-2">
             <div class="v-col-7 ma-auto mt-5">
-              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="topFileInfo.files"
+              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
                             @change="handleChangeTopFile()" accept="image/*"></v-file-input>
               <v-col>
                 <v-radio-group v-model="productInfo.thumbnailIndex">
                   <v-row class="justify-center">
-                    <div class="ma-5" v-for="(preview,i) in topFileInfo.previews" :key="i">
+                    <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
                       <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
                       <v-row>
                         <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
@@ -48,19 +48,7 @@
                   </v-row>
                 </v-radio-group>
               </v-col>
-              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="bottomFileInfo.files"
-                            @change="handleChangeBottomFile()" accept="image/*"></v-file-input>
-              <v-col>
-                <v-row class="justify-center">
-                  <div class="ma-5" v-for="(preview,i) in bottomFileInfo.previews" :key="i">
-                    <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
-                    <v-row>
-                      <p class="mr-5 text-grey-darken-1" :value="i">{{preview.name}}</p>
-                      <v-btn @click="clickBottomRemoveBtn(i)">삭제</v-btn>
-                    </v-row>
-                  </div>
-                </v-row>
-              </v-col>
+              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
             </div>
             <div class="v-col-3 ma-auto mt-5">
               <v-select
@@ -71,7 +59,7 @@
             </div>
           </v-card>
           <div class="text-center ma-10">
-            <v-btn class="me-4" @click="handleClickSubmit" color="success">
+            <v-btn class="me-4" @click="clickCompleteButton" color="success">
               완료
             </v-btn>
             <v-btn @click="emits('handleMoveList')" color="red">
@@ -80,30 +68,49 @@
           </div>
         </v-card>
       </v-form>
-      <v-dialog v-model="dialog" class="ma-auto w-33">
-        <v-card>
-          <v-card-text class="text-center">
-            {{ count }}개의 파일이 실패하였습니다.
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" block @click="dialog = false">Close Dialog</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
     </v-card>
   </v-col>
+  <div :key="failDialog" class="d-flex">
+    <DialogsComponent :dialog="failDialog">
+      <template v-slot:dialogContent>
+        {{ count }}개의 파일이 실패하였습니다.
+      </template>
+      <template v-slot:dialogBtn>
+        <v-col class="text-center">
+          <v-btn @click="clickCancelButton">
+            닫기
+          </v-btn>
+        </v-col>
+      </template>
+    </DialogsComponent>
+  </div>
+  <div :key="submitDialog" class="d-flex">
+    <DialogsComponent :dialog="submitDialog">
+      <template v-slot:dialogContent>
+        성공적으로 등록되었습니다.
+      </template>
+      <template v-slot:dialogBtn>
+        <v-col class="text-center">
+          <v-btn @click="clickCancelButton">
+            닫기
+          </v-btn>
+        </v-col>
+      </template>
+    </DialogsComponent>
+  </div>
 </template>
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
 import {getCategories, insertProduct} from "@/apis/product/productApis";
+import DialogsComponent from "@/components/common/DialogsComponent.vue";
 
 const emits = defineEmits(['handleMoveList'])
-const topFileInfo = ref({files: [], previews: []})
-const bottomFileInfo = ref({files: [], previews: []})
+const fileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
-const dialog = ref(false)
+const failDialog = ref(false)
+const submitDialog = ref(false)
 let count = 0
 
 /**
@@ -151,24 +158,15 @@ const addTopFile = (files) => {
 }
 
 /**
- * BOTTOM 추가
- **/
-const addBottomFile = (files) => {
-  for (let i = 0; i < files.length; i++) {
-    productInfo.value.bottomFiles.push(files[i])
-  }
-}
-
-/**
  * TOP 파일 변경 메소드
  **/
 const handleChangeTopFile = () => {
   count = 0
-  if (!topFileInfo.value.files) {
+  if (!fileInfo.value.files) {
     return
   }
   const correctImage = []
-  topFileInfo.value.files.forEach((file) => {
+  fileInfo.value.files.forEach((file) => {
     if (!fileRule(file)) {
       count++
       return
@@ -176,34 +174,10 @@ const handleChangeTopFile = () => {
     correctImage.push(file)
   })
   addTopFile(correctImage)
-  topFileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
+  fileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
 
   if (count !== 0) {
-    dialog.value = true
-  }
-}
-
-/**
- * BOTTOM 파일 변경 메소드
- **/
-const handleChangeBottomFile = () => {
-  count = 0
-  if (!bottomFileInfo.value.files) {
-    return
-  }
-  const correctImage = []
-  bottomFileInfo.value.files.forEach((file) => {
-    if (!fileRule(file)) {
-      count++
-      return
-    }
-    correctImage.push(file)
-  })
-  addBottomFile(correctImage)
-  bottomFileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
-
-  if (count !== 0) {
-    dialog.value = true
+    failDialog.value = true
   }
 }
 
@@ -237,41 +211,35 @@ const clickTopRemoveBtn = (i) => {
 }
 
 /**
- * BOTTOM 이미지 파일 삭제
- **/
-const clickBottomRemoveBtn = (i) => {
-  productInfo.value.bottomFiles.splice(i, 1)
-}
-
-/**
  * TOP 이미지 미리보기
  **/
 watch(productInfo.value.topFiles, async () => {
-  topFileInfo.value.previews = []
+  fileInfo.value.previews = []
   productInfo.value.topFiles.forEach((file) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = () => {
-        topFileInfo.value.previews.push({name: file.name, url: reader.result})
+        fileInfo.value.previews.push({name: file.name, url: reader.result})
       }
     }
   )
 })
 
 /**
- * BOTTOM 이미지 미리보기
+ * 완료 버튼 클릭
  **/
-watch(productInfo.value.bottomFiles, async () => {
-  bottomFileInfo.value.previews = []
-  productInfo.value.bottomFiles.forEach((file) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        bottomFileInfo.value.previews.push({name: file.name, url: reader.result})
-      }
-    }
-  )
-})
+const clickCompleteButton = async () => {
+  await insertProduct(productInfo.value)
+  submitDialog.value = !submitDialog.value
+}
+
+/**
+ * 다이어로그 닫기
+ **/
+const clickCancelButton = () => {
+  submitDialog.value = !submitDialog.value
+  emits('handleMoveList')
+}
 </script>
 
 <style scoped>
