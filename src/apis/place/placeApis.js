@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const domain = 'http://localhost:8080'
+const domain = 'http://' + window.location.hostname + ':8080'
 
 export const getPlaceRoomStatus = async ( id ) => {
   const res = await axios.get(`${ domain }/api/place/${id}`)
