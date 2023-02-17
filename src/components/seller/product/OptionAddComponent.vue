@@ -60,7 +60,7 @@
 
 <script setup>
 import {onMounted, ref} from 'vue'
-import {deleteSellProduct, getSellProduct, insertSellProduct, updateSellProduct} from "@/apis/product/apis";
+import {deleteSellProduct, getSellProduct, insertSellProduct, updateSellProduct} from "@/apis/product/productApis";
 
 const props = defineProps(['prNo'])
 const emits = defineEmits(['handleMoveList', 'handleRefreshKey'])

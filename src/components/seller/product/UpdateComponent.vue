@@ -84,7 +84,7 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
-import {getCategories, getProduct, updateProduct} from "@/apis/product/apis";
+import {getCategories, getProduct, updateProduct} from "@/apis/product/productApis";
 
 const props = defineProps(['prNo'])
 const emits = defineEmits(['handleMoveList'])

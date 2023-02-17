@@ -49,9 +49,10 @@ const handleChangePage = (pageInfo) => {
 }
 
 const handelDetailPage = (prNo) => {
+  console.log('handleDetailPage')
   console.log(prNo)
   router.push({name: 'SellerProductDetailPage', params: {prNo: prNo}, query: pageSearch.value})
-}
+};
 
 const handleProductSearch = (search) => {
   pageSearch.value.keyword = search.value.keyword

@@ -84,7 +84,7 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue'
-import {getCategories, insertProduct} from "@/apis/product/apis";
+import {getCategories, insertProduct} from "@/apis/product/productApis";
 
 const emits = defineEmits(['handleMoveList'])
 const fileInfo = ref({files: [], previews: []})

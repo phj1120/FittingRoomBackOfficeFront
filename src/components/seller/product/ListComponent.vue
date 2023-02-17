@@ -86,11 +86,11 @@
 </template>
 
 <script setup>
-import {getImageUrl, getProductList, updateProductStatusAtOnce} from "@/api/seller/productApis";
+import {getImageUrl, getProductList, updateProductStatusAtOnce} from "@/apis/product/productApis";
 import {onMounted, ref} from "vue";
 
 const props = defineProps(['pageSearch'])
-const emits = defineEmits(['handleProductSearch', 'handelDetailPage'])
+const emits = defineEmits(['handelDetailPage', 'handleChangePage'])
 
 const pageInfo = ref({page: null, end: null})
 const products = ref([])

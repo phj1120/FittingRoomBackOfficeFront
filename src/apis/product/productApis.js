@@ -10,6 +10,45 @@ export const getProduct = async (prNo) => {
   return res.data
 }
 
+
+/**
+ *  상품 목록 조회 API
+ **/
+export const getProductList = async (pageSearch) => {
+  console.log(`[Product Apis] getProductList`)
+  console.log(pageSearch);
+
+  let params = {};
+
+  // 사용자
+  params.seNo = pageSearch.seNo
+
+  // 페이징
+  params.size = pageSearch.size || 10
+  params.page = pageSearch.page || 1
+
+  // 검색 조건이 있으면 (types, keyword)
+  if (pageSearch.types && pageSearch.types.length !== 0
+    && pageSearch.types.values() && pageSearch.keyword) {
+    params.keyword = pageSearch.keyword
+    params.types = pageSearch.types.join(',')
+  }
+
+  // 날짜 제한이 있으면 (startDt, endDt)
+  if (pageSearch.startDt && pageSearch.endDt) {
+    params.startDt = pageSearch.startDt
+    params.endDt = pageSearch.endDt
+  }
+
+  const res = await axios.get(`${domain}/api/seller/product/list`, {
+    params: params
+  });
+
+  console.log(res.data)
+  return res.data
+}
+
+
 /**
  * 상품 추가 API
  **/
@@ -76,6 +115,25 @@ export const updateProduct = async (productInfo) => {
 }
 
 /**
+ * 상품 상태 일괄 변경 API
+ **/
+export const updateProductStatusAtOnce = async (status, products) => {
+  console.log(`[Product Apis] getChangeStatusAtOnce`)
+  console.log(status)
+  console.log(products)
+
+  const res = await axios.put(`${domain}/api/seller/product/status`, {
+    prNos: products,
+    prStatus: status
+  });
+
+  console.log(res.data)
+  return res.data
+}
+
+
+
+/**
  * 카테고리 조회 API
  **/
 export const getCategories = async () => {
@@ -119,4 +177,11 @@ export const updateSellProduct = async (sellProductInfo) => {
 export const deleteSellProduct = async (spNo) => {
   const res = await axios.delete(`${domain}/api/seller/sellproduct/${spNo}`)
   return res.data
+}
+
+/**
+ * 이미지 조회
+ **/
+export const getImageUrl = (path)=>{
+  return `${domain}/image/${path}`
 }
