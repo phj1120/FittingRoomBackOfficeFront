@@ -33,22 +33,34 @@
           </v-card>
           <v-card class="ma-10 bg-grey-lighten-2">
             <div class="v-col-7 ma-auto mt-5">
-              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="fileInfo.files"
-                            @change="handleChangeFile()" accept="image/*"></v-file-input>
+              <v-file-input multiple type="file" label="상품 사진 첨부" prepend-icon="mdi-camera" v-model="topFileInfo.files"
+                            @change="handleChangeTopFile()" accept="image/*"></v-file-input>
               <v-col>
                 <v-radio-group v-model="productInfo.thumbnailIndex">
                   <v-row class="justify-center">
-                    <div class="ma-5" v-for="(preview,i) in fileInfo.previews" :key="i">
+                    <div class="ma-5" v-for="(preview,i) in topFileInfo.previews" :key="i">
                       <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
                       <v-row>
                         <v-radio :label="preview.name" :value="i" class="mr-5"></v-radio>
-                        <v-btn @click="clickRemoveBtn(i)">삭제</v-btn>
+                        <v-btn @click="clickTopRemoveBtn(i)">삭제</v-btn>
                       </v-row>
                     </div>
                   </v-row>
                 </v-radio-group>
               </v-col>
-              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="productInfo.bottomFiles"></v-file-input>
+              <v-file-input type="file" label="상품 상세정보 파일 첨부" v-model="bottomFileInfo.files"
+                            @change="handleChangeBottomFile()" accept="image/*"></v-file-input>
+              <v-col>
+                <v-row class="justify-center">
+                  <div class="ma-5" v-for="(preview,i) in bottomFileInfo.previews" :key="i">
+                    <v-img class="mb-10 w-auto" :src="preview.url" contain height="25vh"/>
+                    <v-row>
+                      <p class="mr-5 text-grey-darken-1" :value="i">{{preview.name}}</p>
+                      <v-btn @click="clickBottomRemoveBtn(i)">삭제</v-btn>
+                    </v-row>
+                  </div>
+                </v-row>
+              </v-col>
             </div>
             <div class="v-col-3 ma-auto mt-5">
               <v-select
@@ -87,7 +99,8 @@ import {onMounted, ref, watch} from 'vue'
 import {getCategories, insertProduct} from "@/apis/product/productApis";
 
 const emits = defineEmits(['handleMoveList'])
-const fileInfo = ref({files: [], previews: []})
+const topFileInfo = ref({files: [], previews: []})
+const bottomFileInfo = ref({files: [], previews: []})
 const categoriesInfo = ref([{prcNo: null, prcPathName: null}])
 const status = ref(['ACTIVE', 'INACTIVE', 'SOLDOUT'])
 const dialog = ref(false)
@@ -129,32 +142,65 @@ onMounted(() => {
 })
 
 /**
- * 파일 추가
+ * TOP 파일 추가
  **/
-const addFile = (files) => {
+const addTopFile = (files) => {
   for (let i = 0; i < files.length; i++) {
     productInfo.value.topFiles.push(files[i])
   }
 }
 
 /**
- * 파일 변경 메소드
+ * BOTTOM 추가
  **/
-const handleChangeFile = () => {
+const addBottomFile = (files) => {
+  for (let i = 0; i < files.length; i++) {
+    productInfo.value.bottomFiles.push(files[i])
+  }
+}
+
+/**
+ * TOP 파일 변경 메소드
+ **/
+const handleChangeTopFile = () => {
   count = 0
-  if (!fileInfo.value.files) {
+  if (!topFileInfo.value.files) {
     return
   }
   const correctImage = []
-  fileInfo.value.files.forEach((file) => {
+  topFileInfo.value.files.forEach((file) => {
     if (!fileRule(file)) {
       count++
       return
     }
     correctImage.push(file)
   })
-  addFile(correctImage)
-  fileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
+  addTopFile(correctImage)
+  topFileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
+
+  if (count !== 0) {
+    dialog.value = true
+  }
+}
+
+/**
+ * BOTTOM 파일 변경 메소드
+ **/
+const handleChangeBottomFile = () => {
+  count = 0
+  if (!bottomFileInfo.value.files) {
+    return
+  }
+  const correctImage = []
+  bottomFileInfo.value.files.forEach((file) => {
+    if (!fileRule(file)) {
+      count++
+      return
+    }
+    correctImage.push(file)
+  })
+  addBottomFile(correctImage)
+  bottomFileInfo.value.files = [] // 값이 남는 것을 방지하기 위해 초기화
 
   if (count !== 0) {
     dialog.value = true
@@ -174,9 +220,9 @@ const fileRule = (file) => {
 }
 
 /**
- * 이미지 파일 각각 삭제
+ * TOP 이미지 파일 삭제
  **/
-const clickRemoveBtn = (i) => {
+const clickTopRemoveBtn = (i) => {
   productInfo.value.topFiles.splice(i, 1)
 
   // 썸네일을 삭제한 경우 첫번째 사진을 썸네일로 지정
@@ -191,15 +237,37 @@ const clickRemoveBtn = (i) => {
 }
 
 /**
- * 이미지 미리보기
+ * BOTTOM 이미지 파일 삭제
+ **/
+const clickBottomRemoveBtn = (i) => {
+  productInfo.value.bottomFiles.splice(i, 1)
+}
+
+/**
+ * TOP 이미지 미리보기
  **/
 watch(productInfo.value.topFiles, async () => {
-  fileInfo.value.previews = []
+  topFileInfo.value.previews = []
   productInfo.value.topFiles.forEach((file) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = () => {
-        fileInfo.value.previews.push({name: file.name, url: reader.result})
+        topFileInfo.value.previews.push({name: file.name, url: reader.result})
+      }
+    }
+  )
+})
+
+/**
+ * BOTTOM 이미지 미리보기
+ **/
+watch(productInfo.value.bottomFiles, async () => {
+  bottomFileInfo.value.previews = []
+  productInfo.value.bottomFiles.forEach((file) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        bottomFileInfo.value.previews.push({name: file.name, url: reader.result})
       }
     }
   )

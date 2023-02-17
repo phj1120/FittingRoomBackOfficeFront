@@ -94,7 +94,7 @@
             </v-table>
             <v-row>
               <v-col>
-                <v-btn>
+                <v-btn @click="emits('handleUpdatePage')">
                   수정
                 </v-btn>
                 <v-btn>
@@ -110,12 +110,15 @@
 </template>
 
 <script setup>
-import {getImageUrl, getProduct} from "@/api/seller/productApis";
+import {getImageUrl, getProduct} from "@/apis/product/productApis";
 import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
 console.log(route)
+
+const emits = defineEmits(['handleUpdatePage'])
+
 const productInfo = ref({
   prName: null,
   prBrand: null,
@@ -126,7 +129,6 @@ const productInfo = ref({
   topFiles: [],
   bottomFiles: []
 })
-
 
 const getProductData = async (prNo) => {
   const result = await getProduct(prNo)
