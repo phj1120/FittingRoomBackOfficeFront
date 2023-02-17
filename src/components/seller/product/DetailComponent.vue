@@ -116,6 +116,8 @@ import {useRoute} from "vue-router";
 
 const route = useRoute()
 
+const emits = defineEmits(['handleUpdatePage'])
+
 const productInfo = ref({
   prName: null,
   prBrand: null,
