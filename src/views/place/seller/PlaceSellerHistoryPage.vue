@@ -17,6 +17,7 @@
 
   const links = ref([
     { icon: 'mdi-send', title: '판매자 요청 현황', name: 'PlaceSellerStatusPage' },
+    { icon: 'mdi-alert-octagon', title: '판매자 입점 목록', name: 'PlaceSellerListPage' },
     { icon: 'mdi-inbox-arrow-down', title: '판매자 요청 기록', name: 'PlaceSellerHistoryPage' },
   ])
 </script>

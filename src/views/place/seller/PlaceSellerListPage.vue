@@ -3,7 +3,7 @@
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
       <v-col cols="12" :key="refrashKey">
-        <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList"></StatusComponent>
+        <ListComponent :listInfo="listInfo" @handleRouterList="handleRouterList" @handleRouterSearchList="handleRouterSearchList" @handleRouterStatus="handleRouterStatus"></ListComponent>
       </v-col>
     </PlaceContentLayout>
   </PlaceLayout>
@@ -14,8 +14,8 @@
   import PlaceSideLayout from "@/layouts/place/PlaceSideLayout.vue";
   import PlaceContentLayout from "@/layouts/place/PlaceContentLayout.vue";
   import {ref} from "vue";
+  import ListComponent from "@/components/place/seller/ListComponent.vue";
   import {useRoute, useRouter} from "vue-router";
-  import StatusComponent from "@/components/place/seller/StatusComponent.vue";
 
 
   const route = useRoute()
@@ -29,6 +29,9 @@
   const listInfo = ref({
     page: route.query.page,
     size: route.query.size,
+    type: route.query.type,
+    keyword: route.query.keyword,
+    status: route.query.status,
     id: 2
   })
 
@@ -36,13 +39,29 @@
   const handleRouterList = ( pageInfo ) => {
     listInfo.value.page = pageInfo.page
     listInfo.value.size = pageInfo.size
-    router.push({ name: 'PlaceSellerStatusPage', query: {page: listInfo.value.page, size: listInfo.value.size}})
+    router.push({ name: 'PlaceSellerListPage', query: listInfo.value})
+  }
+
+  const handleRouterSearchList = ( searchInfo ) => {
+    listInfo.value.page = 1
+    listInfo.value.type = searchInfo.type
+    listInfo.value.keyword = searchInfo.keyword
+    router.push({ name: 'PlaceSellerListPage', query: listInfo.value})
+  }
+
+  const handleRouterStatus = ( status ) => {
+    listInfo.value.page = 1
+    listInfo.value.status = status
+    router.push({ name: 'PlaceSellerListPage', query: listInfo.value})
   }
 
 
   router.beforeEach(( to, from, next ) => {
     listInfo.value.page = to.query.page
     listInfo.value.size = to.query.size
+    listInfo.value.type = to.query.type
+    listInfo.value.keyword = to.query.keyword
+    listInfo.value.status = to.query.status
 
     refrashKey.value++
     next()
