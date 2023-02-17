@@ -8,9 +8,6 @@
 </template>
 
 <script setup>
-  import SideLayout from "@/layouts/seller/SellerSideLayout.vue";
-  import BasicLayout from "@/layouts/seller/SellerLayout.vue";
-  import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
   import {ref} from "vue";
   import RequestComponent from "@/components/seller/store/RequestComponent.vue";
   import SellerLayout from "@/layouts/seller/SellerLayout.vue";
