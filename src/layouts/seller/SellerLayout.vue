@@ -34,7 +34,7 @@
   const commonLinks = ref([
     {title: '장소제공자', name: 'PlacePage'},
     {title: '입어볼래', name: 'SellerDressPage'},
-    {title: '로그인', name: 'LoginPagePre'},
+    {title: '로그인', name: 'LoginPage'},
     {title: '로그아웃', name: 'LogoutPage'},
   ])
 </script>

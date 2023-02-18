@@ -5,14 +5,15 @@ import VueCookies from "vue-cookies";
 const useLogin = defineStore('useLogin',() => {
   const memberInfo = ref({access:null, refresh:null})
 
-  const saveInfo = (result) => {
-    const {refresh, access} = result
 
+  const saveInfo = (result, userInfo) => {
+    const {refresh, access} = result
     memberInfo.value.access = access
     memberInfo.value.refresh = refresh
 
     VueCookies.set("access", access)
     VueCookies.set("refresh", refresh)
+    VueCookies.set("adminType", userInfo.type)
   }
 
   const getTokens = () => {
@@ -22,14 +23,21 @@ const useLogin = defineStore('useLogin',() => {
     return memberInfo
   }
 
+  const getAdmin = () => {
+    return VueCookies.get("adminType")
+  }
+
   const logout = () =>{
     memberInfo.value.access = null
     memberInfo.value.refresh = null
 
-    localStorage.clear()
+    VueCookies.remove("access")
+    VueCookies.remove("refresh")
+    VueCookies.remove("adminType")
   }
 
-  return {memberInfo, saveInfo, getTokens, logout}
+  return {memberInfo, saveInfo, getTokens, getAdmin, logout}
 })
+
 
 export default useLogin
