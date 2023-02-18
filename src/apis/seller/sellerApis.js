@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import authAxios from "@/apis/common/authAxios";
 const domain = 'http://localhost:8080'
 /**
  * 판매자 apis
