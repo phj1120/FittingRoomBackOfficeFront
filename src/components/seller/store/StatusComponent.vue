@@ -65,6 +65,7 @@ const handleClickDialog = (list) => {
 }
 const getSellerStatus = async () => {
   const data = await getStoreStatus(props.listInfo.id )
+
   storeStatus.value = data.data
 }
 

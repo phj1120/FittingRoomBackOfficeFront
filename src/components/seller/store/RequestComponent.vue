@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import {reactive, ref, watch} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import Datepicker from 'vue3-datepicker';
 import {ko} from "date-fns/locale";
 import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
@@ -46,12 +46,20 @@ const insertRequestHistory = async ()=>{
   const res = await insertRequestHistorySeller(requestHistoryData.value)
 }
 
+const dateFormatting =() =>{
+  const sum = picked.value.getFullYear() +
+    "-" + ((picked.value.getMonth() + 1) > 9 ? (picked.value.getMonth() + 1).toString() : "0" + (picked.value.getMonth() + 1)) +
+    "-" + (picked.value.getDate() > 9 ? picked.value.getDate().toString() : "0" + picked.value.getDate().toString());
+  requestHistoryData.value.rhStartDt = sum
+}
 
 watch(picked,()=>{
-  const sum = picked.value.getFullYear() +
-  "-" + ((picked.value.getMonth() + 1) > 9 ? (picked.value.getMonth() + 1).toString() : "0" + (picked.value.getMonth() + 1)) +
-  "-" + (picked.value.getDate() > 9 ? picked.value.getDate().toString() : "0" + picked.value.getDate().toString());
-  requestHistoryData.value.rhStartDt = sum
+  dateFormatting()
+  console.log(requestHistoryData.value.rhStartDt)
+})
+onMounted(() => {
+  dateFormatting()
+
 })
 </script>
 
