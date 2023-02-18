@@ -1,7 +1,7 @@
 <template>
   <BasicLayout>
     <ContentLayout>
-    <JoinComponent @handleLoginPage="handleLoginPage"></JoinComponent>
+      <JoinComponent @handleLoginPage="handleLoginPage"></JoinComponent>
     </ContentLayout>
   </BasicLayout>
 </template>
@@ -16,7 +16,7 @@ const router = useRouter()
 
 const handleLoginPage = () =>{
 
-  router.push({name : 'LoginPagePre'})
+  router.push({name : 'LoginPage'})
 }
 </script>
 

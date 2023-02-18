@@ -16,9 +16,6 @@ export const getProduct = async (prNo) => {
  *  상품 목록 조회 API
  **/
 export const getProductList = async (pageSearch) => {
-  console.log(`[Product Apis] getProductList`)
-  console.log(pageSearch);
-
   let params = {};
 
   // 사용자
@@ -45,7 +42,6 @@ export const getProductList = async (pageSearch) => {
     params: params
   });
 
-  console.log(res.data)
   return res.data
 }
 

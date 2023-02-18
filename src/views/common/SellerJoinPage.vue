@@ -16,7 +16,7 @@ const router = useRouter()
 
 const handleLoginPage = () =>{
 
-  router.push({name : 'LoginPagePre'})
+  router.push({name : 'LoginPage'})
 }
 </script>
 
