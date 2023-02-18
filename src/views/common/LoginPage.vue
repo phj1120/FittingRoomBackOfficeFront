@@ -14,7 +14,7 @@
 
 
   const router = useRouter()
-
+  console.log(window.location.hostname.indexOf('armysseung.iptime.org'))
 
   const loginRouter = ( pageName ) => {
     router.push({name : pageName})
