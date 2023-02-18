@@ -5,8 +5,7 @@ import useLogin from "@/store/common/useLogin";
 
 // 요청과 토큰 refresh 한 번에 처리
 const authAxios = axios.create()
-
-const domain = 'http://' + window.location.hostname + ':8080'
+const domain = 'http://' + window.location.hostname + ( window.location.hostname.indexOf('armysseung.iptime.org') == -1 ? ':8080' : ':3258')
 
 const requestRefresh = async () => {
   console.log("[RequestRefresh Start]")
