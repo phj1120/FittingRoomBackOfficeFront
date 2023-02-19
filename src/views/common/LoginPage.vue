@@ -1,7 +1,7 @@
 <template>
   <CommonLayout>
     <CommonContentLayout>
-      <LoginComponent @loginRouter="loginRouter" @handleSellerJoinPage="handleSellerJoinPage" @handlePlaceAdminJoinPage="handlePlaceAdminJoinPage"></LoginComponent>
+      <LoginComponent @loginRouter="loginRouter" @handleSellerJoinPage="handleSellerJoinPage" @handlePlaceJoinPage="handlePlaceJoinPage"></LoginComponent>
     </CommonContentLayout>
   </CommonLayout>
 </template>
@@ -24,8 +24,8 @@
     router.push({name : 'SellerJoinPage'})
   }
 
-  const handlePlaceAdminJoinPage = () => {
-    router.push({name : 'PlaceAdminJoinPage'})
+  const handlePlaceJoinPage = () => {
+    router.push({name : 'PlaceJoinPage'})
   }
 </script>
 

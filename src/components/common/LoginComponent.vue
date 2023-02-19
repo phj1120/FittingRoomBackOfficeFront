@@ -2,7 +2,7 @@
   <v-card class="pt-10 margin-center" width="50vw" min-height="70vh">
     <v-col cols="8" class="pt-15 margin-center">
       <v-form ref="form" @submit.prevent lazy-validation>
-        <v-img class="logo mt-15 mb-15 margin-center" width="11vw" src="https://vo.la/AcATy"></v-img>
+        <v-img class="mt-15 mb-15 margin-center" width="11vw" src="https://vo.la/AcATy"></v-img>
         <v-radio-group v-model="userInfo.type" :rules="userRule" inline>
           <v-radio label="Place" value="place"></v-radio>
           <v-radio label="Seller" value="seller"></v-radio>
@@ -16,7 +16,7 @@
           <v-btn class="w-100" color="primary" @click="emits('handleSellerJoinPage')">판매자 회원가입</v-btn>
         </v-col>
         <v-col cols="6">
-          <v-btn class="w-100" color="primary" @click="emits('handlePlaceAdminJoinPage')">장소제공자 회원가입</v-btn>
+          <v-btn class="w-100" color="primary" @click="emits('handlePlaceJoinPage')">장소제공자 회원가입</v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -30,7 +30,7 @@
   import useLogin from "@/store/common/useLogin";
 
 
-  const emits = defineEmits(['loginRouter', 'handleSellerJoinPage', 'handlePlaceAdminJoinPage'])
+  const emits = defineEmits(['loginRouter', 'handleSellerJoinPage', 'handlePlaceJoinPage'])
   const {getAdmin, getTokens, saveInfo} = useLogin()
   const userInfo = ref({memberId: null, password: null, type:null})
   const userRule = ref([v => !!v || 'required'])
