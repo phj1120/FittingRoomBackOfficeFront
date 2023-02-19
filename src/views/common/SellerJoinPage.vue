@@ -1,23 +1,24 @@
 <template>
-  <BasicLayout>
-    <ContentLayout>
-    <JoinComponent @handleLoginPage="handleLoginPage"></JoinComponent>
-    </ContentLayout>
-  </BasicLayout>
+  <CommonLayout>
+    <CommonContentLayout>
+      <SellerJoinComponent @handleLoginPage="handleLoginPage"></SellerJoinComponent>
+    </CommonContentLayout>
+  </CommonLayout>
 </template>
 
 <script setup>
-import BasicLayout from "@/layouts/seller/SellerLayout.vue";
-import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
-import JoinComponent from "@/components/common/JoinComponent.vue";
-import {useRouter} from "vue-router";
+  import {useRouter} from "vue-router";
+  import SellerJoinComponent from "@/components/common/SellerJoinComponent.vue";
+  import CommonLayout from "@/layouts/common/CommonLayout.vue";
+  import CommonContentLayout from "@/layouts/common/CommonContentLayout.vue";
 
-const router = useRouter()
 
-const handleLoginPage = () =>{
+  const router = useRouter()
 
-  router.push({name : 'LoginPage'})
-}
+
+  const handleLoginPage = () =>{
+    router.push({name : 'LoginPage'})
+  }
 </script>
 
 <style scoped>

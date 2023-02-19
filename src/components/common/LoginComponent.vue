@@ -57,7 +57,9 @@
     }
   }
 </script>
-  <style scoped>
+
+
+<style scoped>
   .margin-center {
     margin: 0 auto;
   }

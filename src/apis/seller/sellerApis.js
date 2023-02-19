@@ -1,4 +1,4 @@
-import axios from "axios";
+import authAxios from "@/apis/common/authAxios";
 
 const domain = 'http://localhost:8080'
 /**
@@ -20,7 +20,7 @@ export const insertSeller = async ( insertSellerData ) => {
   formData.append('image' ,insertSellerData.image[0])
 
 
-  const res = await axios.post(`${ domain }/api/seller/register`,formData,
+  const res = await authAxios.post(`${ domain }/api/seller/register`,formData,
     {headers: {'Content-Type': 'false'}})
   return res.data
 }

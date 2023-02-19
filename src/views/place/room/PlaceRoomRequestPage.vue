@@ -2,7 +2,7 @@
   <PlaceLayout>
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
-      <RequestComponent></RequestComponent>
+      <RequestComponent :key="refrehKey" @handleChangeRefrehKey="handleChangeRefrehKey"></RequestComponent>
     </PlaceContentLayout>
   </PlaceLayout>
 </template>
@@ -15,10 +15,16 @@
   import RequestComponent from "@/components/place/room/RequestComponent.vue";
 
 
+  const refrehKey = ref(0)
   const links = ref([
     { icon: 'mdi-inbox-arrow-down', title: '영업 상태 현황', name: 'PlaceRoomStatusPage' },
     { icon: 'mdi-send', title: '영업 상태 변경 신청', name: 'PlaceRoomRequestPage' },
     ])
+
+
+  const handleChangeRefrehKey = () => {
+    refrehKey.value++
+  }
 </script>
 
 <style scoped>

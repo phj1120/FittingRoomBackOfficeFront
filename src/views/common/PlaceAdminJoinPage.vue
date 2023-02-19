@@ -9,7 +9,7 @@
 <script setup>
 import BasicLayout from "@/layouts/seller/SellerLayout.vue";
 import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
-import JoinComponent from "@/components/common/JoinComponent.vue";
+import JoinComponent from "@/components/common/SellerJoinComponent.vue";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
