@@ -1,7 +1,6 @@
 import axios from "axios";
 import useMemberInfo from "@/store/common/useLogin";
 import router from "@/router";
-import useLogin from "@/store/common/useLogin";
 
 // 요청과 토큰 refresh 한 번에 처리
 const authAxios = axios.create()
@@ -9,7 +8,7 @@ const domain = 'http://' + window.location.hostname + ( window.location.hostname
 
 const requestRefresh = async () => {
   console.log("[RequestRefresh Start]")
-  const {getTokens, saveInfo} = useLogin();
+  const {getTokens, saveInfo} = useMemberInfo();
   const tokens = getTokens().value
 
   // 갱신 요청 전송
@@ -18,7 +17,7 @@ const requestRefresh = async () => {
   console.log(data)
 
   // 받아온 정보 클라이언트에 반영
-  saveInfo(data.access, data.refresh)
+  saveInfo(data)
   console.log("[RequestRefresh End]")
 
   return data
@@ -42,7 +41,7 @@ authAxios.interceptors.response.use((response) => {
     console.log(error)
 
     // access 토큰이 만료된 경우 refresh 토큰 이용해 access 토큰과 refresh 토큰 갱신
-    if (error.response.data.msg === 'EXPIRED') {
+    if (error.response.data.msg === 'Expired Token') {
       try {
         // 토큰 refresh 요청
         const tokens = await requestRefresh()
@@ -55,8 +54,7 @@ authAxios.interceptors.response.use((response) => {
         console.log('authAxios.interceptors: Refresh Error')
         console.log(eee)
 
-        // TODO Axios 에서 Post 로 로그인 창으로 보내는게 맞나?
-        router.push({name: 'LoginPage'})
+        router.push({name: 'LoginPagePre'})
 
         return Promise.reject(eee);
       }

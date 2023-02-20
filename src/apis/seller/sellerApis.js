@@ -1,3 +1,4 @@
+import axios from "axios";
 import authAxios from "@/apis/common/authAxios";
 
 const domain = 'http://localhost:8080'
@@ -22,5 +23,17 @@ export const insertSeller = async ( insertSellerData ) => {
 
   const res = await authAxios.post(`${ domain }/api/seller/register`,formData,
     {headers: {'Content-Type': 'false'}})
+  return res.data
+}
+
+export const getProfileSeller = async () => {
+  const res = await authAxios.get(`${ domain }/api/seller/profile`)
+  console.log(res.data)
+  return res.data
+}
+
+export const modifyProfileSeller = async (profileData) => {
+  const res = await authAxios.put(`${ domain }/api/seller/profile`,profileData)
+  console.log(res.data)
   return res.data
 }

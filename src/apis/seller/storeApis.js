@@ -1,3 +1,5 @@
+
+import axios from "axios";
 import authAxios from "@/apis/common/authAxios";
 
 const domain = 'http://localhost:8080'
@@ -15,6 +17,8 @@ export const insertRequestHistorySeller = async (requestHistoryData) => {
 
 export const updateRequestHistorySeller = async (requestHistoryData) => {
   // const res = await authAxios.post(`http://localhost:8080/rolling/add`, { 'name': rolling })
+  // const res = await axios.post(`http://localhost:8080/rolling/add`, { 'name': rolling })
+
   const res = await authAxios.put(`${domain}/api/seller/store/status`, requestHistoryData)
   return res.data
 }
