@@ -5,9 +5,9 @@
       <v-table class="ma-10 border">
         <tbody>
           <tr>
-            <th class="text-center">상호명</th>
+            <th class="text-center">성명</th>
             <td><v-text-field class="pt-5" v-model="insertSellerData.seName" variant="outlined"></v-text-field></td>
-            <th class="text-center">담당자</th>
+            <th class="text-center">생년월일</th>
             <td><v-text-field class="pt-5" v-model="insertSellerData.seManager" variant="outlined"></v-text-field></td>
           </tr>
           <tr>
@@ -16,7 +16,11 @@
           </tr>
           <tr>
             <th class="text-center">비밀번호</th>
-            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.sePassword" variant="outlined"></v-text-field></td>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.sePassword" type="password" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">비밀번호 확인</th>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.sePassword" type="password" variant="outlined"></v-text-field></td>
           </tr>
           <tr>
             <th class="text-center">이메일</th>
@@ -26,6 +30,11 @@
           </tr>
           <tr>
             <th class="text-center">주소</th>
+            <td colspan="2"><v-text-field class="pt-5" v-model="addressInfo.address" variant="outlined"></v-text-field></td>
+            <td colspan="1"><v-btn class="w-100" color="primary" @click="handleClickAddress">주소 찾기</v-btn></td>
+          </tr>
+          <tr>
+            <th class="text-center">상세주소</th>
             <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.seAddress" variant="outlined"></v-text-field></td>
           </tr>
           <tr>
@@ -57,13 +66,17 @@
   import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
   import {insertSeller} from "@/apis/seller/sellerApis";
   import UploadComponent from "@/components/common/UploadComponent.vue";
+  import useUtil from "@/store/common/useUtil";
 
 
   const emits = defineEmits(['handleLoginPage'])
+  const { execDaumPostcode } = useUtil()
   const insertSellerData = ref({seName: null, seManager: null, seId: null, sePassword: null
   ,seEmail: null,sePhone: null, seAddress: null,pmNo: null, fixFile: 0 ,image: [] })
   const requestHistoryData = ref({rhContent: '가입', pmNo: 0, seNo: 0 })
   const previews = ref([])
+  const addressInfo = ref({})
+
 
 
   const clickRemoveBtn = () => {
@@ -86,6 +99,10 @@
     requestHistoryData.value.seNo = res.data
     await insertRequestHistorySeller(requestHistoryData.value)
     emits('handleLoginPage')
+  }
+
+  const handleClickAddress = () => {
+    addressInfo.value = execDaumPostcode()
   }
 
 
