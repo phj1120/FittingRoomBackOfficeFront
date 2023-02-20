@@ -1,13 +1,11 @@
 <template>
   <v-col cols="12">
     <v-card>
-      <div>
       <v-col cols="2">
         <v-card color="blue" class="pt-2 pb-2">
           <h1 class="text-white text-center">입점 목록</h1>
         </v-card>
       </v-col>
-      </div>
       <v-row class="mt-5 ml-2 mr-2">
         <v-col cols="1">
           <v-select label="Status" v-model="statusList.value" :items="statusList.item" variant="underlined" @update:modelValue="handleChangeStatus"></v-select>
@@ -19,7 +17,7 @@
           <SearchComponent :searchList="searchList" :listInfo="props.listInfo" @handleClickSearch="handleClickSearch" />
         </v-col>
       </v-row>
-      <v-table class="ma-4">
+      <v-table class="ml-2 mr-2 mb-2">
         <thead>
         <tr class="bg-amber-accent-2">
           <th class="text-center font-weight-bold">판매점</th>
@@ -49,7 +47,7 @@
       </v-pagination>
     </v-card>
   </v-col>
-  <v-col :key="dialog">
+  <v-col class="pa-0" :key="dialog">
     <DialogsComponent :dialog="dialog">
       <template v-slot:dialogContent>
         <DetailComponent :sellerDetail="sellerDetail[0]"></DetailComponent>

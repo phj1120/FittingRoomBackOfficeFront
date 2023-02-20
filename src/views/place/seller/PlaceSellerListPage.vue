@@ -2,7 +2,7 @@
   <PlaceLayout>
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
-      <v-col cols="12" :key="refrashKey">
+      <v-col cols="12" class="pa-0" :key="refrashKey">
         <ListComponent :listInfo="listInfo" @handleRouterList="handleRouterList" @handleRouterSearchList="handleRouterSearchList" @handleRouterStatus="handleRouterStatus"></ListComponent>
       </v-col>
     </PlaceContentLayout>
@@ -32,7 +32,6 @@
     type: route.query.type,
     keyword: route.query.keyword,
     status: route.query.status,
-    id: 2
   })
 
 

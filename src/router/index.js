@@ -169,9 +169,9 @@ const routes = [
     component: () => import('@/views/common/SellerJoinPage.vue'),
   },
   {
-    path: '/login/placeAdminJoin',
-    name: 'PlaceAdminJoinPage',
-    component: () => import('@/views/common/PlaceAdminJoinPage.vue'),
+    path: '/join/place',
+    name: 'PlaceJoinPage',
+    component: () => import('@/views/common/PlaceJoinPage.vue'),
   },
 ]
 

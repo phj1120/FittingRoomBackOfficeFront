@@ -2,7 +2,7 @@
   <PlaceLayout>
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
-      <v-col cols="12" :key="refrashKey">
+      <v-col cols="12" class="pa-0" :key="refrashKey">
         <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList"></StatusComponent>
       </v-col>
     </PlaceContentLayout>
