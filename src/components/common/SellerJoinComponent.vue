@@ -1,24 +1,43 @@
 <template>
-  <v-card class="pa-8" width="60vw">
-    <v-form class="form-login">
-      <v-table>
+  <v-card class="pt-10 margin-center" width="50vw" min-height="70vh">
+    <v-form>
+      <v-img class="mt-8 mb-15 margin-center" width="10vw" src="https://vo.la/AcATy"></v-img>
+      <v-table class="ma-10 border">
         <tbody>
           <tr>
             <th class="text-center">상호명</th>
-            <td><v-text-field v-model="insertSellerData.seName" variant="outlined"></v-text-field></td>
+            <td><v-text-field class="pt-5" v-model="insertSellerData.seName" variant="outlined"></v-text-field></td>
             <th class="text-center">담당자</th>
-            <v-text-field v-model="insertSellerData.seManager" variant="outlined"></v-text-field>
+            <td><v-text-field class="pt-5" v-model="insertSellerData.seManager" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">아이디</th>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.seId" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">비밀번호</th>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.sePassword" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">이메일</th>
+            <td><v-text-field class="pt-5" v-model="insertSellerData.seEmail" variant="outlined"></v-text-field></td>
+            <th class="text-center">연락처</th>
+            <td><v-text-field class="pt-5" v-model="insertSellerData.sePhone" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">주소</th>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.seAddress" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">입점장소</th>
+            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.pmNo" variant="outlined"></v-text-field></td>
+          </tr>
+          <tr>
+            <th class="text-center">첨부파일</th>
+            <td colspan="3" class="pt-4"><UploadComponent @addFile="addFile" @clickRemoveBtn="clickRemoveBtn"></UploadComponent></td>
           </tr>
         </tbody>
       </v-table>
-
-      <v-text-field v-model="insertSellerData.seId" label="아이디"></v-text-field>
-      <v-text-field v-model="insertSellerData.sePassword" label="비밀번호"></v-text-field>
-      <v-text-field v-model="insertSellerData.seEmail" label="이메일 주소"></v-text-field>
-      <v-text-field v-model="insertSellerData.sePhone" label="전화번호"></v-text-field>
-      <v-text-field v-model="insertSellerData.seAddress" label="회사 주소"></v-text-field>
-      <v-text-field v-model="insertSellerData.pmNo" label="장소제공자번호"></v-text-field>
-      <UploadComponent @addFile="addFile" @clickRemoveBtn="clickRemoveBtn"></UploadComponent>
 
       <v-radio-group v-model="insertSellerData.fixFile">
         <v-row class="justify-center">
@@ -31,8 +50,7 @@
           </div>
         </v-row>
       </v-radio-group>
-
-      <v-btn class="mt-2" @click="insertSellerBtn">저장</v-btn>
+      <v-btn class="float-right mr-10 mb-10" color="success" @click="insertSellerBtn">가입신청</v-btn>
     </v-form>
   </v-card>
 
@@ -90,4 +108,7 @@
 </script>
 
 <style scoped>
+  .margin-center {
+    margin: 0 auto;
+  }
 </style>
