@@ -1,7 +1,7 @@
 <template>
-  <v-col cols="12">
+  <v-col cols="12" class="pa-0">
       <div>
-        <v-card class="ma-10 pa-10 font-weight-bold text-h4">피팅룸 {{ roomStatus.roName }}은 <h2 style="display: inline; color: red">
+        <v-card class="ml-10 mr-10 pa-10 font-weight-bold text-h4">피팅룸 {{ roomStatus.roName }}은 <h2 style="display: inline; color: red">
           {{ roomStatus.pmStatus }}</h2> 상태입니다!</v-card>
         <v-card class="ma-10">
           <v-table class="ma-4">

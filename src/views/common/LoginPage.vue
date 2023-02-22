@@ -1,25 +1,33 @@
 <template>
-  <BasicLayout>
-    <ContentLayout>
-    </ContentLayout>
-  </BasicLayout>
+  <CommonLayout>
+    <CommonContentLayout>
+      <LoginComponent @loginRouter="loginRouter" @handleSellerJoinPage="handleSellerJoinPage" @handlePlaceJoinPage="handlePlaceJoinPage"></LoginComponent>
+    </CommonContentLayout>
+  </CommonLayout>
 </template>
 
 <script setup>
-import BasicLayout from "@/layouts/seller/SellerLayout.vue";
-import ContentLayout from "@/layouts/seller/SellerContentLayout.vue";
-import {ref} from "vue";
+  import LoginComponent from "@/components/common/LoginComponent.vue";
+  import {useRouter} from "vue-router";
+  import CommonLayout from "@/layouts/common/CommonLayout.vue";
+  import CommonContentLayout from "@/layouts/common/CommonContentLayout.vue";
 
 
-const links = ref([
-    { icon: 'mdi-inbox-arrow-down', title: '', name: '' },
-    { icon: 'mdi-send', title: '', name: '' },
-    { icon: 'mdi-delete', title: '', name: '' },
-    { icon: 'mdi-alert-octagon', title: '', name: '' },
-    { icon: 'mdi-alert-octagon', title: '', name: '' },
-  ])
+  const router = useRouter()
+
+
+  const loginRouter = ( pageName ) => {
+    router.push({name : pageName})
+  }
+
+  const handleSellerJoinPage = () => {
+    router.push({name : 'SellerJoinPage'})
+  }
+
+  const handlePlaceJoinPage = () => {
+    router.push({name : 'PlaceJoinPage'})
+  }
 </script>
 
 <style scoped>
-
 </style>

@@ -1,14 +1,14 @@
 <template>
   <CommonLayout>
     <CommonContentLayout>
-      <SellerJoinComponent @handleLoginPage="handleLoginPage"></SellerJoinComponent>
+      <PlaceJoinComponent @handleLoginPage="handleLoginPage"></PlaceJoinComponent>
     </CommonContentLayout>
   </CommonLayout>
 </template>
 
 <script setup>
   import {useRouter} from "vue-router";
-  import SellerJoinComponent from "@/components/common/SellerJoinComponent.vue";
+  import PlaceJoinComponent from "@/components/common/PlaceJoinComponent.vue";
   import CommonLayout from "@/layouts/common/CommonLayout.vue";
   import CommonContentLayout from "@/layouts/common/CommonContentLayout.vue";
 

@@ -2,7 +2,7 @@
   <PlaceLayout>
     <PlaceSideLayout :links="links"></PlaceSideLayout>
     <PlaceContentLayout>
-      <v-col cols="12" :key="refrashKey">
+      <v-col cols="12" class="pa-0" :key="refrashKey">
         <StatusComponent :listInfo="listInfo" @handleRouterList="handleRouterList" @handleRoute="handleRoute"></StatusComponent>
       </v-col>
     </PlaceContentLayout>
@@ -29,18 +29,17 @@
   const listInfo = ref({
     page: route.query.page,
     size: route.query.size,
-    id: 2
   })
 
 
   const handleRouterList = ( pageInfo ) => {
     listInfo.value.page = pageInfo.page
     listInfo.value.size = pageInfo.size
-    router.push({ name: 'PlaceSellerStatusPage', query: {page: listInfo.value.page, size: listInfo.value.size}})
+    router.push({ name: 'PlaceSellerStatusPage', query: listInfo.value})
   }
 
   const handleRoute = () => {
-    router.push({ name: 'PlaceSellerStatusPage' })
+    router.push({ name: 'PlaceSellerListPage' })
   }
 
 

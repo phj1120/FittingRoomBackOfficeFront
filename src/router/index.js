@@ -1,5 +1,7 @@
 // Composables
 import {createRouter, createWebHistory} from 'vue-router'
+import VueCookies from "vue-cookies";
+
 
 const routes = [
   {
@@ -152,8 +154,9 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'LoginPagePre',
-    component: () => import('@/views/common/LoginPagePre.vue'),
+    name: 'LoginPage',
+    component: () => import('@/views/common/LoginPage.vue'),
+    meta: {filterAuth: true},
   },
   {
     path: '/logout',
@@ -166,9 +169,9 @@ const routes = [
     component: () => import('@/views/common/SellerJoinPage.vue'),
   },
   {
-    path: '/login/placeAdminJoin',
-    name: 'PlaceAdminJoinPage',
-    component: () => import('@/views/common/PlaceAdminJoinPage.vue'),
+    path: '/join/place',
+    name: 'PlaceJoinPage',
+    component: () => import('@/views/common/PlaceJoinPage.vue'),
   },
 ]
 
@@ -176,5 +179,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
+
+
+router.beforeEach((to,from)=>{
+  if(to.meta.filterAuth){
+    VueCookies.remove("access")
+    VueCookies.remove("refresh")
+    VueCookies.remove("adminType")
+  }
+})
+
 
 export default router
