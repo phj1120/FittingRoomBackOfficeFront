@@ -58,6 +58,7 @@
     pageInfo.value.page = data.page
     pageInfo.value.size = data.size
     pageInfo.value.last = data.last
+    console.log(pageInfo.value)
   }
 
 
