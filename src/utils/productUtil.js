@@ -1,10 +1,11 @@
-const domain = 'http://localhost:8080'
+const domain = 'http://localhost:7070'
 
 /**
  * 이미지 조회
  **/
 export const getImageUrl = (path) => {
-  return `${domain}/image/${path}`
+  return `${domain}
+  /image/${path}`
 }
 
 /**
