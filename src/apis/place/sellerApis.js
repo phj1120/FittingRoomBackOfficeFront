@@ -1,6 +1,6 @@
 import authAxios from "@/apis/common/authAxios";
 
-const domain = 'http://' + window.location.hostname + ( window.location.hostname.indexOf('armysseung.iptime.org') == -1 ? ':7070' : ':3258')
+const domain = 'http://' + window.location.hostname + ( window.location.hostname.indexOf('armysseung.iptime.org') == -1 ? ':7070' : ':3256')
 
 export const getSellerRequestList = async ( listInfo ) => {
   const res = await authAxios.get(`${ domain }/api/seller/status`, {
