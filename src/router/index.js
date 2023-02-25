@@ -1,5 +1,7 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
+import VueCookies from "vue-cookies";
+
 
 const routes = [
   {
@@ -26,6 +28,16 @@ const routes = [
         name: 'SellerProductAddPage',
         component: () => import('@/views/seller/product/SellerProductAddPage.vue'),
       },
+      {
+        path: 'update/:prNo',
+        name: 'SellerProductUpdatePage',
+        component: () => import('@/views/seller/product/SellerProductUpdatePage.vue'),
+      },
+      {
+        path: 'option/:prNo',
+        name: 'SellerProductOptionAddPage',
+        component: () => import('@/views/seller/product/SellerProductOptionPage.vue'),
+      }
     ]
   },
   {
@@ -112,6 +124,11 @@ const routes = [
         component: () => import('@/views/place/seller/PlaceSellerStatusPage.vue'),
       },
       {
+        path: 'list',
+        name: 'PlaceSellerListPage',
+        component: () => import('@/views/place/seller/PlaceSellerListPage.vue'),
+      },
+      {
         path: 'history',
         name: 'PlaceSellerHistoryPage',
         component: () => import('@/views/place/seller/PlaceSellerHistoryPage.vue'),
@@ -139,11 +156,22 @@ const routes = [
     path: '/login',
     name: 'LoginPage',
     component: () => import('@/views/common/LoginPage.vue'),
+    meta: {filterAuth: true},
   },
   {
     path: '/logout',
     name: 'LogoutPage',
     redirect: '/',
+  },
+  {
+    path: '/login/sellerJoin',
+    name: 'SellerJoinPage',
+    component: () => import('@/views/common/SellerJoinPage.vue'),
+  },
+  {
+    path: '/join/place',
+    name: 'PlaceJoinPage',
+    component: () => import('@/views/common/PlaceJoinPage.vue'),
   },
 ]
 
@@ -151,5 +179,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
+
+
+router.beforeEach((to,from)=>{
+  if(to.meta.filterAuth){
+    VueCookies.remove("access")
+    VueCookies.remove("refresh")
+    VueCookies.remove("adminType")
+  }
+})
+
 
 export default router

@@ -1,8 +1,7 @@
 <template>
-  <v-col cols="12">
-    <v-card color="grey-darken-2" min-height="85vh">
+  <v-col cols="12" class="pa-0">
       <div>
-        <v-card class="ma-10 pa-10 font-weight-bold text-h4">피팅룸 {{ roomStatus.roName }}은 <h2 style="display: inline; color: red">
+        <v-card class="ml-10 mr-10 pa-10 font-weight-bold text-h4">피팅룸 {{ roomStatus.roName }}은 <h2 style="display: inline; color: red">
           {{ roomStatus.pmStatus }}</h2> 상태입니다!</v-card>
         <v-card class="ma-10">
           <v-table class="ma-4">
@@ -29,13 +28,12 @@
           </v-pagination>
         </v-card>
       </div>
-    </v-card>
   </v-col>
 </template>
 
 <script setup>
   import {onMounted, ref} from "vue";
-  import {getPlaceRoomStatus, getPlaceRoomStatusList} from "@/apis/place/PlaceApis";
+  import {getPlaceRoomStatus, getPlaceRoomStatusList} from "@/apis/place/placeApis";
 
 
   const props = defineProps(['listInfo'])
@@ -60,6 +58,7 @@
     pageInfo.value.page = data.page
     pageInfo.value.size = data.size
     pageInfo.value.last = data.last
+    console.log(pageInfo.value)
   }
 
 

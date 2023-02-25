@@ -1,59 +1,66 @@
 <template>
-  <v-form class="form-login" ref="form" v-model="valid" lazy-validation>
-    <v-img class="logo" src="https://gw.plateer.com/fileroot/0/files/upload_newPortal/uploadFile/%7Bce214677-57b3-41f1-adbe-ded459ae3cb4%7D.png"></v-img>
-    <v-text-field class="input-id" v-model="userInfo.memberId" :counter="10" :rules="nameRules" label="Name" required></v-text-field>
-    <v-text-field class="input-password" v-model="userInfo.password" label="Password" required></v-text-field>
-    <v-btn color="success" class="me-0 btn-login" @click="handleClickLogin">Login</v-btn>
-  </v-form>
-  <div class="form-register">
-    <v-btn color="primary" class="btn-register">Sign up</v-btn>
-  </div>
+  <v-card class="pt-10 margin-center" width="50vw" min-height="70vh">
+    <v-col cols="8" class="pt-15 margin-center">
+      <v-form ref="form" @submit.prevent lazy-validation>
+        <v-img class="mt-15 mb-15 margin-center" width="11vw" src="https://vo.la/AcATy"></v-img>
+        <v-radio-group v-model="userInfo.type" :rules="userRule" inline>
+          <v-radio label="Place" value="place"></v-radio>
+          <v-radio label="Seller" value="seller"></v-radio>
+        </v-radio-group>
+        <v-text-field  v-model="userInfo.memberId" :counter="10" :rules="userRule" label="ID"></v-text-field>
+        <v-text-field class="mb-5" type="password" v-model="userInfo.password" :rules="userRule" label="Password"></v-text-field>
+        <v-btn type="submit" class="mb-5" width="100vw" color="success" @click="handleClickLogin">Login</v-btn>
+      </v-form>
+      <v-row justify="center">
+        <v-col cols="6">
+          <v-btn class="w-100" color="primary" @click="emits('handleSellerJoinPage')">판매자 회원가입</v-btn>
+        </v-col>
+        <v-col cols="6">
+          <v-btn class="w-100" color="primary" @click="emits('handlePlaceJoinPage')">장소제공자 회원가입</v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
+  </v-card>
+
 </template>
 
 <script setup>
   import {ref} from "vue";
-  import axios from "axios";
-
-  const userInfo = ref( { memberId: '', password: '' } )
-
+  import {signIn} from "@/apis/common/commonApis";
+  import useLogin from "@/store/common/useLogin";
 
 
-  const handleClickLogin = async () => { await axios.post(`http://localhost:8080/auth/api/login`, userInfo.value) }
+  const emits = defineEmits(['loginRouter', 'handleSellerJoinPage', 'handlePlaceJoinPage'])
+  const {getAdmin, getTokens, saveInfo} = useLogin()
+  const userInfo = ref({memberId: null, password: null, type:null})
+  const userRule = ref([v => !!v || 'required'])
+
+  const handleClickLogin = async () => {
+    if ( userInfo.value.memberId == null || userInfo.value.password == null || userInfo.value.type == null ) {
+      return
+    }
+
+    // userInfo.value.memberId = 'test'
+    // userInfo.value.password = 'password'
+    // userInfo.value.type = 'seller'
+
+    // userInfo.value.memberId = 'testphj'
+    // userInfo.value.password = 'password'
+    // userInfo.value.type = 'place'
+
+    const result = await signIn(userInfo.value)
+    if (result) {
+      saveInfo(result, userInfo.value)
+      getTokens()
+      const routePage = ( getAdmin() == 'place' ? 'PlacePage' : 'SellerPage' )
+      emits('loginRouter', routePage)
+    }
+  }
 </script>
 
+
 <style scoped>
-  .form-login {
-    padding-top: 15%;
+  .margin-center {
     margin: 0 auto;
-    width: 80%;
-  }
-
-  .logo {
-    margin: 0 auto;
-    width: 15em;
-  }
-
-  .input-id, .input-password {
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .input-id {
-    padding-top: 5em;
-  }
-
-  .btn-login {
-    float: right;
-  }
-
-  .form-register {
-    width: 100%;
-  }
-
-  .btn-register {
-    position: absolute;
-    left: 10%;
-    top: 80%;
-    width: 80%;
   }
 </style>
