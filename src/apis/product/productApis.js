@@ -1,7 +1,7 @@
 import axios from "axios";
 import authAxios from "@/apis/common/authAxios";
 
-const domain = 'http://localhost:8080'
+const domain = 'http://localhost:7070'
 
 /**
  * 상품 조회 API

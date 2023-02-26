@@ -16,19 +16,20 @@
   import {ref} from "vue";
   import StatusComponent from "@/components/seller/store/StatusComponent.vue";
   import {useRoute, useRouter} from "vue-router";
+
+
   const route = useRoute()
   const router = useRouter()
   const refrashKey = ref(0)
-
   const links = ref([
     { icon: 'mdi-inbox-arrow-down', title: '영업 상태 현황', name: 'SellerStoreStatusPage' },
     { icon: 'mdi-send', title: '영업 상태 변경 신청', name: 'SellerStoreRequestPage' },
   ])
-
   const listInfo = ref({
     page: route.query.page,
     size: route.query.size
   })
+
 
   const handleRouterList = ( pageInfo ) => {
     listInfo.value.page = pageInfo.page
