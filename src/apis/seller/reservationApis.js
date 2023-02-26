@@ -25,7 +25,7 @@ export const getProductListApi = async (datas) => {
   console.log(datas)
   const res = await authAxios.get(`${ domain }/api/reservation/detail`, {
     params: {
-      seNo: datas.seNo, caNo: datas.caNo
+      caNo: datas.caNo
     }
   } )
   console.log(res.data)

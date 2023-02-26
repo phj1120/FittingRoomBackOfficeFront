@@ -27,7 +27,7 @@ const links = ref([
   const refrashKey = ref(0)
   const listInfo = ref({
     page: route.query.page,
-    size: route.query.size,
+    size: route.query.size
   })
 
   const handleRouterList = ( pageInfo ) => {
