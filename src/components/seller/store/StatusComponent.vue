@@ -64,7 +64,7 @@ const handleClickDialog = (list) => {
   dialog.value.tf = !dialog.value.tf
 }
 const getSellerStatus = async () => {
-  const data = await getStoreStatus(props.listInfo.id )
+  const data = await getStoreStatus()
 
   storeStatus.value = data.data
 }

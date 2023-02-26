@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12">
+  <v-col cols="12"  >
     <v-table class="ma-4 border">
       <tbody>
       <tr>
@@ -54,13 +54,14 @@ import {onMounted, ref} from "vue";
 
 const props = defineProps(['detailData'])
 const productList = ref([])
-const datas = ref({caNo : 0, seNo: 13, reNo:0, cpNo : 0})
+const datas = ref({caNo : 0, seNo: 0, reNo:0, cpNo : 0, orNo: 0})
+
 const getProductList = async () => {
-  console.log(datas.value)
 
   const data = await getProductListApi( datas.value)
   productList.value=data
 }
+
 
 const modifyProduct = async (cpNo) => {
   datas.value.cpNo = cpNo
@@ -70,6 +71,7 @@ const modifyProduct = async (cpNo) => {
 onMounted(() => {
   datas.value.caNo = props.detailData.caNo
   datas.value.reNo = props.detailData.reNo
+  datas.value.orNo = props.detailData.orNo
   getProductList()
 })
 </script>

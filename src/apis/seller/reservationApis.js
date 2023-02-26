@@ -2,7 +2,7 @@
 import axios from "axios";
 import authAxios from "@/apis/common/authAxios";
 
-const domain = 'http://localhost:8080'
+const domain = 'http://localhost:7070'
 
 /**
  * 예약관리 apis
@@ -25,7 +25,7 @@ export const getProductListApi = async (datas) => {
   console.log(datas)
   const res = await authAxios.get(`${ domain }/api/reservation/detail`, {
     params: {
-      seNo: datas.seNo, caNo: datas.caNo
+      caNo: datas.caNo
     }
   } )
   console.log(res.data)

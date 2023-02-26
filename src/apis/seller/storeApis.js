@@ -23,8 +23,8 @@ export const updateRequestHistorySeller = async (requestHistoryData) => {
   return res.data
 }
 
-export const getStoreStatus = async ( id ) => {
-  const res = await authAxios.get(`${ domain }/api/seller/store/status/${id}`)
+export const getStoreStatus = async () => {
+  const res = await authAxios.get(`${ domain }/api/seller/store/status/info`)
   return res.data
 }
 
