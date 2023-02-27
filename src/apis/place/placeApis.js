@@ -2,8 +2,10 @@ import authAxios from "@/apis/common/authAxios";
 
 const domain = 'http://' + window.location.hostname + ( window.location.hostname.indexOf('armysseung.iptime.org') == -1 ? ':7070' : ':3256')
 
-export const getPlaceRoomStatus = async ( id ) => {
-  const res = await authAxios.get(`${ domain }/api/place/${id}`)
+export const getPlaceRoomStatus = async () => {
+  const res = await authAxios.get(`${ domain }/api/place`)
+  console.log(res)
+
   return res.data
 }
 

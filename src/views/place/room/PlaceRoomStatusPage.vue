@@ -28,7 +28,6 @@
   const listInfo = ref({
     page: route.query.page,
     size: route.query.size,
-    id: 1
   })
 
 
