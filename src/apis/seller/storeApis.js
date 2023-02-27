@@ -11,7 +11,7 @@ const domain = 'http://localhost:7070'
  * 버전 : v1
  **/
 export const insertRequestHistorySeller = async (requestHistoryData) => {
-  const res = await authAxios.post(`${domain}/api/seller/store/request`, requestHistoryData)
+  const res = await axios.post(`${domain}/api/seller/store/request`, requestHistoryData)
   return res.data
 }
 
@@ -40,5 +40,10 @@ export const getStoreStatusList = async ( listInfo ) => {
 
 export const insertRequestAnswer = async ( requestHistory ) => {
   const res = await authAxios.post(`${domain}/api/seller/answer`, requestHistory)
+  return res.data
+}
+
+export const modifyRequestHistorySeller = async (requestHistoryData) => {
+  const res = await authAxios.post(`${domain}/api/seller/store/modify`, requestHistoryData)
   return res.data
 }

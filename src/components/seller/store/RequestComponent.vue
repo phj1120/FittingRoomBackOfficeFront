@@ -29,7 +29,7 @@
 import {onMounted, reactive, ref, watch} from "vue";
 import Datepicker from 'vue3-datepicker';
 import {ko} from "date-fns/locale";
-import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
+import {insertRequestHistorySeller, modifyRequestHistorySeller} from "@/apis/seller/storeApis";
 const picked = ref(new Date())
 const locale = reactive(ko)
 const inputFormat = ref('yyyy-MM-dd')
@@ -43,7 +43,7 @@ const insertRequestHistory = async ()=>{
   requestHistoryData.value.rhContent = select.value
   requestHistoryData.value.rhReason = text.value
 
-  const res = await insertRequestHistorySeller(requestHistoryData.value)
+  const res = await modifyRequestHistorySeller(requestHistoryData.value)
 }
 
 const dateFormatting =() =>{

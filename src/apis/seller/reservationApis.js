@@ -18,6 +18,8 @@ export const getReservationListApi = async ( listInfo ) => {
       page: listInfo.page || 1, size: listInfo.size || 10
     }
   })
+
+  console.log(res.data)
   return res.data
 }
 
