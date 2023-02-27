@@ -48,7 +48,7 @@
   }
 
   const getRoomStatus = async () => {
-    const data = await getPlaceRoomStatus( props.listInfo.id )
+    const data = await getPlaceRoomStatus()
     roomStatus.value = data.data
   }
 
