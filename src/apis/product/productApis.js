@@ -73,7 +73,7 @@ export const insertProduct = async (productInfo) => {
     }
   }
 
-  const res = await axios.post(`${domain}/api/seller/product`, formData,
+  const res = await authAxios.post(`${domain}/api/seller/product`, formData,
     {headers: {'Content-Type': 'false'}})
 
   return res.data
