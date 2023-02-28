@@ -21,7 +21,7 @@ export const insertSeller = async ( insertSellerData ) => {
   formData.append('image' ,insertSellerData.image[0])
 
 
-  const res = await authAxios.post(`${ domain }/api/seller/register`,formData,
+  const res = await axios.post(`${ domain }/api/seller/register`,formData,
     {headers: {'Content-Type': 'false'}})
   return res.data
 }
