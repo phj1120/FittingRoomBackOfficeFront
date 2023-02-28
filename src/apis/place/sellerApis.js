@@ -5,6 +5,7 @@ const domain = 'http://' + window.location.hostname + ( window.location.hostname
 export const getSellerRequestList = async ( listInfo ) => {
   const res = await authAxios.get(`${ domain }/api/seller/status`, {
     params: {
+
       page: listInfo.page || 1, size: listInfo.size || 10
     }
   })
