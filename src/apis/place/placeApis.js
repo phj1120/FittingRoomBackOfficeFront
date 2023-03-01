@@ -9,6 +9,11 @@ export const getPlaceRoomStatus = async () => {
   return res.data
 }
 
+export const getPlaceAllList = async () => {
+  const res = await authAxios.get(`${ domain }/api/place/list/all`)
+  return res.data
+}
+
 export const getPlaceRoomStatusList = async ( listInfo ) => {
   const res = await authAxios.get(`${ domain }/api/room/status/list`, {
     params: {
