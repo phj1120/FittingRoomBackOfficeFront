@@ -17,7 +17,7 @@ export const insertSeller = async ( insertSellerData ) => {
   formData.append('seEmail', insertSellerData.seEmail)
   formData.append('sePhone', insertSellerData.sePhone)
   formData.append('seAddress', insertSellerData.seAddress)
-  formData.append('pmNo', insertSellerData.pmNo)
+  formData.append('pmNo', String(insertSellerData.pmNo))
   formData.append('image' ,insertSellerData.image[0])
 
 

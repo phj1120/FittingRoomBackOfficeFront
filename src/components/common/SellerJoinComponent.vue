@@ -16,7 +16,7 @@
           </tr>
           <tr>
             <th class="text-center">비밀번호</th>
-            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.sePassword" variant="outlined"></v-text-field></td>
+            <td colspan="3"><v-text-field class="pt-5" type="password" v-model="insertSellerData.sePassword" variant="outlined"></v-text-field></td>
           </tr>
           <tr>
             <th class="text-center">이메일</th>
@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <th class="text-center">입점장소</th>
-            <td colspan="3"><v-text-field class="pt-5" v-model="insertSellerData.pmNo" variant="outlined"></v-text-field></td>
+            <td colspan="3"><v-select class="pt-5" v-model="placeInfo.itemValue" :items="placeInfo.items" variant="outlined" @update:modelValue="handleSelectItem"></v-select></td>
           </tr>
           <tr>
             <th class="text-center">첨부파일</th>
@@ -57,10 +57,11 @@
 </template>
 
 <script setup>
-  import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
   import {insertRequestHistorySeller} from "@/apis/seller/storeApis";
   import {insertSeller} from "@/apis/seller/sellerApis";
   import UploadComponent from "@/components/common/UploadComponent.vue";
+  import {getPlaceAllList} from "@/apis/place/placeApis";
 
 
   const emits = defineEmits(['handleLoginPage'])
@@ -68,6 +69,7 @@
   ,seEmail: null,sePhone: null, seAddress: null,pmNo: null, fixFile: 0 ,image: [] })
   const requestHistoryData = ref({rhContent: '가입', pmNo: 0, seNo: 0 })
   const previews = ref([])
+  const placeInfo = ref({ items: [], roList: [], itemValue: null })
 
 
   const clickRemoveBtn = () => {
@@ -81,20 +83,28 @@
     }
   }
 
-
-  const insertSellerBtn = async () =>{
+  const insertSellerBtn = async () => {
     requestHistoryData.value.pmNo = insertSellerData.value.pmNo
 
     const res = await insertSeller(insertSellerData.value)
-    console.log(res)
     requestHistoryData.value.seNo = res.data
     await insertRequestHistorySeller(requestHistoryData.value)
     emits('handleLoginPage')
   }
 
+  const getComPlaceAllList = async () => {
+    const data = await getPlaceAllList()
+    placeInfo.value.roList = data
+    data.forEach(ele => placeInfo.value.items.push(ele.roName))
+  }
+
+  const handleSelectItem = () => {
+    const place = placeInfo.value.roList.find(ele => ele.roName == placeInfo.value.itemValue)
+    insertSellerData.value.pmNo = place.pmNo
+  }
+
 
   watch(insertSellerData.value.image, async () => {
-    console.log(insertSellerData.value)
     previews.value = []
     insertSellerData.value.image.forEach((file) => {
         const reader = new FileReader()
@@ -104,6 +114,10 @@
         }
       }
     )
+  })
+
+  onMounted(() => {
+    getComPlaceAllList()
   })
 </script>
 
