@@ -2,7 +2,7 @@
 import axios from "axios";
 import authAxios from "@/apis/common/authAxios";
 
-const domain = 'http://localhost:7070'
+const domain = 'http://' + window.location.hostname + ( window.location.hostname.indexOf('armysseung.iptime.org') == -1 ? ':7070' : ':3256')
 
 /**
  * 영업관리 apis
